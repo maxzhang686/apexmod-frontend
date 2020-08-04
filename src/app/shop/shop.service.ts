@@ -12,14 +12,13 @@ import { IProduct } from '../shared/models/products';
   providedIn: 'root'
 })
 export class ShopService {
-  baseUrl= 'https://localhost:5001/api/' 
+  baseUrl = 'https://localhost:5001/api/';
 
   constructor(private http: HttpClient) { }
 
 
   getProducts(shopParams: ShopParams){
     let params = new HttpParams();
-    
     if (shopParams.brandId !== 0 ) {
       params = params.append('brandId', shopParams.brandId.toString());
     }
