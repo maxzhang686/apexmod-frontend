@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { OrdersComponent } from './orders.component';
-import { OrdersDetailedComponent } from './order-detailed/order-detailed.component';
+import { OrderDetailedComponent } from './order-detailed/order-detailed.component';
 
 const routes: Routes = [
   {path: '', component: OrdersComponent},
-  {path: ':id', component: OrdersDetailedComponent, data: {breadcrumb: {alias: 'OrderDetailed'}}}
+  {path: ':id', component: OrderDetailedComponent, data: {breadcrumb: {alias: 'OrderDetailed'}}}
 ];
 
 @NgModule({

@@ -9,7 +9,7 @@ import { OrdersService } from '../orders.service';
   templateUrl: './order-detailed.component.html',
   styleUrls: ['./order-detailed.component.scss']
 })
-export class OrdersDetailedComponent implements OnInit {
+export class OrderDetailedComponent implements OnInit {
   order: IOrder;
 
   constructor(private route: ActivatedRoute, private breadcrumbService: BreadcrumbService, private ordersService: OrdersService) {
