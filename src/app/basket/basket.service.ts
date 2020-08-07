@@ -5,7 +5,8 @@ import { BehaviorSubject } from 'rxjs';
 import { IBasket, IBasketItem, Basket, IBasketTotals } from '../shared/models/basket';
 import { map } from 'rxjs/operators';
 import { IProduct } from '../shared/models/products';
-// import { IDeliveryMethod } from '../shared/models/deliveryMethod';
+import { IDeliveryMethod } from '../shared/models/deliveryMethod';
+
 
 @Injectable({
   providedIn: 'root'
@@ -29,14 +30,14 @@ export class BasketService {
   //     );
   // }
 
-  // setShippingPrice(deliveryMethod: IDeliveryMethod) {
-  //   this.shipping = deliveryMethod.price;
-  //   const basket = this.getCurrentBasketValue();
-  //   basket.deliveryMethodId = deliveryMethod.id;
-  //   basket.shippingPrice = deliveryMethod.price;
-  //   this.calculateTotals();
-  //   this.setBasket(basket);
-  // }
+  setShippingPrice(deliveryMethod: IDeliveryMethod) {
+    this.shipping = deliveryMethod.price;
+    // const basket = this.getCurrentBasketValue();
+    // basket.deliveryMethodId = deliveryMethod.id;
+    // basket.shippingPrice = deliveryMethod.price;
+    this.calculateTotals();
+    //this.setBasket(basket);
+  }
 
   getBasket(id: string) {
     return this.http.get(this.baseUrl + 'basket?id=' + id)
@@ -107,11 +108,11 @@ export class BasketService {
     }
   }
 
-  // deleteLocalBasket(id: string) {
-  //   this.basketSource.next(null);
-  //   this.basketTotalSource.next(null);
-  //   localStorage.removeItem('basket_id');
-  // }
+  deleteLocalBasket(id: string) {
+    this.basketSource.next(null);
+    this.basketTotalSource.next(null);
+    localStorage.removeItem('basket_id');
+  }
 
   deleteBasket(basket: IBasket) {
     return this.http.delete(this.baseUrl + 'basket?id=' + basket.id).subscribe(() => {
