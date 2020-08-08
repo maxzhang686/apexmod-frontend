@@ -4,8 +4,10 @@ export interface IProduct {
   description: string;
   price: number;
   pictureUrl: string;
-  productType: string;
-  productBrand: string;
+  // productType: string;
+  productGraphic: string;
+  // productBrand: string;
+  productPlatform: string;
 }
 
 export interface IProductToCreate {
@@ -13,8 +15,10 @@ export interface IProductToCreate {
   description: string;
   price: number;
   pictureUrl: string;
-  productTypeId: number;
-  productBrandId: number;
+  // productTypeId: number;
+  productGraphicId: number;
+  // productBrand: string;
+  productPlatformId: number;
 }
 
 export class ProductFormValues implements IProductToCreate {
@@ -22,10 +26,13 @@ export class ProductFormValues implements IProductToCreate {
   description = '';
   price = 0;
   pictureUrl = '';
-  productBrandId: number;
-  productTypeId: number;
+  // productBrandId: number;
+  productPlatformId: number;
+  // productTypeId: number;
+  productGraphicId: number;
 
   constructor(init?: ProductFormValues) {
     Object.assign(this, init);
   }
+  
 }

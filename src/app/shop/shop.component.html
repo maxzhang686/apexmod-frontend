@@ -2,7 +2,7 @@
     <div class="row">
 
         <section class="col-3">
-            <ng-container *ngIf="types && brands">
+            <ng-container *ngIf="graphics && platforms">
             <h5 class="text-warning ml-3 mt-4 mb-3">Sort</h5>
             <select class="custom-select mb-4" (change)="onSortSelected($event.target.value)">
                 <option *ngFor="let sort of sortOptions" 
@@ -12,19 +12,19 @@
                 </option>
             </select>
 
-            <h5 class="text-warning ml-3">Brands</h5>
+            <h5 class="text-warning ml-3">Platforms</h5>
             <ul class="list-group my-3">
-                <li class="list-group-item" style="cursor: pointer" *ngFor="let brand of brands"
-                    [class.active]="brand.id === this.shopParams.brandId" [value]="brand.id"
-                    (click)="onBrandSelected(brand.id)">
-                    {{brand.name}}
+                <li class="list-group-item" style="cursor: pointer" *ngFor="let platform of platforms"
+                    [class.active]="platform.id === this.shopParams.platformId" [value]="platform.id"
+                    (click)="onPlatformSelected(platform.id)">
+                    {{platform.name}}
                 </li>
             </ul>
-            <h5 class="text-warning ml-3">Types</h5>
+            <h5 class="text-warning ml-3">Graphics</h5>
             <ul class="list-group my-3">
-                <li class="list-group-item" style="cursor: pointer" *ngFor="let type of types" [class.active]="type.id === this.shopParams.typeId"
-                    [value]="type.id" (click)="onTypeSelected(type.id)">
-                    {{type.name}}
+                <li class="list-group-item" style="cursor: pointer" *ngFor="let graphic of graphics" [class.active]="graphic.id === this.shopParams.graphicId"
+                    [value]="graphic.id" (click)="onGraphicSelected(graphic.id)">
+                    {{graphic.name}}
                 </li>
             </ul>
         </ng-container>
@@ -58,7 +58,7 @@
                     [pageSize]="shopParams.pageSize"
                     [pageNumber]="shopParams.pageNumber"
                     [totalCount]="totalCount"
-                    (pageChanged)="onPageChange($event)"
+                    (pageChanged)="onPageChanged($event)"
                 ></app-pager>
             </div>
 

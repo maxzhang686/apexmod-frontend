@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IPagination, Pagination } from '../shared/models/pagination';
-import { IBrand } from '../shared/models/brand';
-import { IType } from '../shared/models/productType';
+// import { IBrand } from '../shared/models/brand';
+import { IPlatform } from '../shared/models/platform';
+
+// import { IType } from '../shared/models/productType';
+import { IGraphic } from '../shared/models/productGraphic';
 import { map, delay } from 'rxjs/operators';
 import { ShopParams } from '../shared/models/shopParams';
 import { IProduct } from '../shared/models/products';
@@ -14,8 +17,11 @@ import { of } from 'rxjs';
 export class ShopService {
   baseUrl = 'https://localhost:5001/api/';
   products: IProduct[] = [];
-  brands: IBrand[] = [];
-  types: IType[] = [];
+  // brands: IBrand[] = [];
+  platforms: IPlatform[] = [];
+
+  // types: IType[] = [];
+  graphics: IGraphic[] = [];
   pagination = new Pagination();
   shopParams = new ShopParams();
 
@@ -40,12 +46,18 @@ export class ShopService {
 
     let params = new HttpParams();
 
-    if (this.shopParams.brandId !== 0) {
-      params = params.append('brandId', this.shopParams.brandId.toString());
+    // if (this.shopParams.brandId !== 0) {
+    //   params = params.append('brandId', this.shopParams.brandId.toString());
+    // }
+    if (this.shopParams.platformId !== 0) {
+      params = params.append('platformId', this.shopParams.platformId.toString());
     }
 
-    if (this.shopParams.typeId !== 0) {
-      params = params.append('typeId', this.shopParams.typeId.toString());
+    // if (this.shopParams.typeId !== 0) {
+    //   params = params.append('typeId', this.shopParams.typeId.toString());
+    // }
+    if (this.shopParams.graphicId !== 0) {
+      params = params.append('graphicId', this.shopParams.graphicId.toString());
     }
 
     if (this.shopParams.search) {
@@ -84,27 +96,51 @@ export class ShopService {
     return this.http.get<IProduct>(this.baseUrl + 'products/' + id);
   }
 
-  getBrands() {
-    if (this.brands.length > 0) {
-      return of(this.brands);
+  // getBrands() {
+  //   if (this.brands.length > 0) {
+  //     return of(this.brands);
+  //   }
+  //   return this.http.get<IBrand[]>(this.baseUrl + 'products/brands').pipe(
+  //     map(response => {
+  //       this.brands = response;
+  //       return response;
+  //     })
+  //   );
+  // }
+
+  getPlatforms() {
+    if (this.platforms.length > 0) {
+      return of(this.platforms);
     }
-    return this.http.get<IBrand[]>(this.baseUrl + 'products/brands').pipe(
+    return this.http.get<IPlatform[]>(this.baseUrl + 'products/platforms').pipe(
       map(response => {
-        this.brands = response;
+        this.platforms = response;
         return response;
       })
     );
   }
 
-  getTypes() {
-    if (this.types.length > 0) {
-      return of(this.types);
+  getGraphics() {
+    if (this.graphics.length > 0) {
+      return of(this.graphics);
     }
-    return this.http.get<IType[]>(this.baseUrl + 'products/types').pipe(
+    return this.http.get<IGraphic[]>(this.baseUrl + 'products/graphics').pipe(
       map(response => {
-        this.types = response;
+        this.graphics = response;
         return response;
       })
     );
   }
+
+  // getTypes() {
+  //   if (this.types.length > 0) {
+  //     return of(this.types);
+  //   }
+  //   return this.http.get<IType[]>(this.baseUrl + 'products/types').pipe(
+  //     map(response => {
+  //       this.types = response;
+  //       return response;
+  //     })
+  //   );
+  // }
 }

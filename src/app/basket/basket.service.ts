@@ -156,8 +156,10 @@ export class BasketService {
       price: item.price,
       pictureUrl: item.pictureUrl,
       quantity,
-      brand: item.productBrand,
-      type: item.productType
+      // brand: item.productBrand,
+      platform: item.productPlatform,
+      graphic: item.productGraphic
+      // type: item.productType
     };
   }
 }
