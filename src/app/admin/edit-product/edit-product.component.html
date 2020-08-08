@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8">
-        <!-- <form #productForm="ngForm" (ngSubmit)="onSubmit(productForm.valid && productForm.value)">
+        <form #productForm="ngForm" (ngSubmit)="onSubmit(productForm.valid && productForm.value)">
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="name">Product Name</label>
@@ -74,24 +74,24 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="brand">Brand</label>
-              <select id="brand" class="form-control" name="productBrandId" [(ngModel)]="product.productBrandId" required>
-                <option *ngFor="let brand of brands"
-                        [selected]="product.productBrandId === brand.id"
-                        [ngValue]="brand.id">{{brand.name}}</option>
+              <label for="brand">PlatForm</label>
+              <select id="brand" class="form-control" name="productPlatformId" [(ngModel)]="product.productPlatformId" required>
+                <option *ngFor="let platForm of platforms"
+                        [selected]="product.productPlatformId === platForm.id"
+                        [ngValue]="platForm.id">{{platForm.name}}</option>
               </select>
             </div>
             <div class="form-group col-md-6">
-              <label for="type">Type</label>
-              <select id="type" class="form-control" name="productTypeId" [(ngModel)]="product.productTypeId" required>
-                <option *ngFor="let type of types"
-                        [selected]="product.productTypeId === type.id"
-                        [ngValue]="type.id">{{type.name}}</option>
+              <label for="type">Graphics</label>
+              <select id="type" class="form-control" name="productGraphicId" [(ngModel)]="product.productGraphicId" required>
+                <option *ngFor="let graphic of graphics"
+                        [selected]="product.productGraphicId === graphic.id"
+                        [ngValue]="graphic.id">{{graphic.name}}</option>
               </select>
             </div>
           </div>
           <button [disabled]="!productForm.valid" type="submit" class="btn btn-primary my-3 float-right">Submit</button>
-        </form> -->
+        </form>
       </div>
     </div>
   </div>

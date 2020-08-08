@@ -17,7 +17,7 @@ order:IOrder
       this.order = state as IOrder;
     }
    }
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }

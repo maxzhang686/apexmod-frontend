@@ -1,76 +1,83 @@
-// import {Component, OnInit} from '@angular/core';
-// import {AdminService} from '../admin.service';
-// import {ShopService} from '../../shop/shop.service';
-// import {ActivatedRoute, Router} from '@angular/router';
-// import {ProductFormValues} from '../../shared/models/products';
-// import {IBrand} from '../../shared/models/brand';
-// import {IType} from '../../shared/models/productType';
-// import {forkJoin} from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {AdminService} from '../admin.service';
+import {ShopService} from '../../shop/shop.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ProductFormValues} from '../../shared/models/products';
+import {IBrand} from '../../shared/models/brand';
+import {IType} from '../../shared/models/productType';
 
-// @Component({
-//   selector: 'app-edit-product',
-//   templateUrl: './edit-product.component.html',
-//   styleUrls: ['./edit-product.component.scss']
-// })
-// export class EditProductComponent implements OnInit {
-//   product: ProductFormValues;
-//   brands: IBrand[];
-//   types: IType[];
+import { IPlatform } from 'src/app/shared/models/platform';
+import { IGraphic } from 'src/app/shared/models/productGraphic';
+import {forkJoin} from 'rxjs';
+@Component({
+  selector: 'app-edit-product',
+  templateUrl: './edit-product.component.html',
+  styleUrls: ['./edit-product.component.scss']
+})
+export class EditProductComponent implements OnInit {
+  product: ProductFormValues;
 
-//   constructor(private adminService: AdminService,
-//               private shopService: ShopService,
-//               private route: ActivatedRoute,
-//               private router: Router) {
-//     this.product = new ProductFormValues();
-//   }
+  // brands: IBrand[];
+  // types: IType[];
+  platforms: IPlatform[];
+  graphics: IGraphic[]
 
-//   ngOnInit(): void {
-//     const brands = this.getBrands();
-//     const types = this.getTypes();
 
-//     forkJoin([types, brands]).subscribe(results => {
-//       this.types = results[0];
-//       this.brands = results[1];
-//     }, error => {
-//       console.log(error);
-//     }, () => {
-//       if (this.route.snapshot.url[0].path === 'edit') {
-//         this.loadProduct();
-//       }
-//     });
-//   }
+  constructor(private adminService: AdminService,
+              private shopService: ShopService,
+              private route: ActivatedRoute,
+              private router: Router) {
+    this.product = new ProductFormValues();
+  }
 
-//   updatePrice(event: any) {
-//     this.product.price = event;
-//   }
+  ngOnInit(): void {
+    const platForms = this.getPlatforms();
+    const graphics = this.getGraphics();
 
-//   loadProduct() {
-//     this.shopService.getProduct(+this.route.snapshot.paramMap.get('id')).subscribe((response: any) => {
-//       const productBrandId = this.brands && this.brands.find(x => x.name === response.productBrand).id;
-//       const productTypeId = this.types && this.types.find(x => x.name === response.productType).id;
-//       this.product = {...response, productBrandId, productTypeId};
-//     });
-//   }
+    forkJoin([graphics, platForms]).subscribe(results => {
+      this.graphics = results[0];
+      this.platforms = results[1];
+    }, error => {
+      console.log(error);
+    }, () => {
+      if (this.route.snapshot.url[0].path === 'edit') {
+        this.loadProduct();
+      }
+    });
+  }
 
-//   getBrands() {
-//     return this.shopService.getBrands();
-//   }
+  updatePrice(event: any) {
+    this.product.price = event;
+  }
 
-//   getTypes() {
-//     return this.shopService.getTypes();
-//   }
+  loadProduct() {
+    this.shopService.getProduct(+this.route.snapshot.paramMap.get('id')).subscribe((response: any) => {
+      const productPlatformId = this.platforms && this.platforms.find(x => x.name === response.productPlatform).id;
+      const productGraphicId = this.graphics && this.graphics.find(x => x.name === response.productGraphic).id;
+      this.product = {...response, productPlatformId, productGraphicId};
+      
+    });
+  }
 
-//   onSubmit(product: ProductFormValues) {
-//     if (this.route.snapshot.url[0].path === 'edit') {
-//       const updatedProduct = {...this.product, ...product, price: +product.price};
-//       this.adminService.updateProduct(updatedProduct, +this.route.snapshot.paramMap.get('id')).subscribe((response: any) => {
-//         this.router.navigate(['/admin']);
-//       });
-//     } else {
-//       const newProduct = {...product, price: +product.price};
-//       this.adminService.createProduct(newProduct).subscribe((response: any) => {
-//         this.router.navigate(['/admin']);
-//       });
-//     }
-//   }
-// }
+  getPlatforms() {
+    return this.shopService.getPlatforms();
+  }
+
+  getGraphics() {
+    return this.shopService.getGraphics();
+  }
+
+  onSubmit(product: ProductFormValues) {
+    if (this.route.snapshot.url[0].path === 'edit') {
+      const updatedProduct = {...this.product, ...product, price: +product.price};
+      this.adminService.updateProduct(updatedProduct, +this.route.snapshot.paramMap.get('id')).subscribe((response: any) => {
+        this.router.navigate(['/admin']);
+      });
+    } else {
+      const newProduct = {...product, price: +product.price};
+      this.adminService.createProduct(newProduct).subscribe((response: any) => {
+        this.router.navigate(['/admin']);
+      });
+    }
+  }
+}
