@@ -8,6 +8,7 @@ export interface IProduct {
   productGraphic: string;
   // productBrand: string;
   productPlatform: string;
+  photos: IPhoto[];
 }
 
 export interface IProductToCreate {
@@ -35,4 +36,11 @@ export class ProductFormValues implements IProductToCreate {
     Object.assign(this, init);
   }
   
+}
+
+export interface IPhoto {
+  id: number;
+  pictureUrl: string;
+  fileName: string;
+  isMain: boolean;
 }
