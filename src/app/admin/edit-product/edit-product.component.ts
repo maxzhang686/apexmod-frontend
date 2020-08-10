@@ -48,6 +48,7 @@ export class EditProductComponent implements OnInit {
 
   updatePrice(event: any) {
     this.product.price = event;
+    console.log(this.product.price)
   }
 
   loadProduct() {
