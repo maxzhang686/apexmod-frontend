@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AdminComponent} from './admin.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { EditComponentComponent } from './edit-component/edit-component.component';
 // import {EditProductComponent} from './edit-product/edit-product.component';
 
 const routes: Routes = [
   {path: '', component: AdminComponent},
   {path: 'create', component: EditProductComponent, data: {breadcrumb: 'Create'}},
   {path: 'edit/:id', component: EditProductComponent, data: {breadcrumb: 'Edit'}},
-  {path: 'edit/:id/component/:id', component: EditProductComponent, data: {breadcrumb: 'Component-Edit'}}
+  {path: 'edit/:id/createComponent', component: EditComponentComponent, data: {breadcrumb: 'Create-Component'}},
+  {path: 'edit/:id/component/:id', component: EditComponentComponent, data: {breadcrumb: 'Edit-Component'}}
 ];
 
 @NgModule({

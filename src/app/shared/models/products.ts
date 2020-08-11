@@ -63,18 +63,18 @@ export interface IComponentPhoto {
 }
 
 export interface IComponentToCreate {
-  title: string;
-  description: string;
-  pPrice: number;
-  tPrice: number;
+  Title: string;
+  Description: string;
+  PPrice: number;
+  TPrice: number;
   productId: number;
 }
 
 export class ComponentFormValues implements IComponentToCreate {
-  title = '';
-  description = '';
-  pPrice = 0;
-  tPrice = 0;
+  Title = '';
+  Description = '';
+  PPrice = 0;
+  TPrice = 0;
   productId = null;
 
   constructor(init?: ProductFormValues) {

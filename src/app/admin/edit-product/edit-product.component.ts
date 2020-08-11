@@ -3,8 +3,8 @@ import {AdminService} from '../admin.service';
 import {ShopService} from '../../shop/shop.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProductFormValues, IProduct} from '../../shared/models/products';
-import {IBrand} from '../../shared/models/brand';
-import {IType} from '../../shared/models/productType';
+// import {IBrand} from '../../shared/models/brand';
+// import {IType} from '../../shared/models/productType';
 
 import { IPlatform } from 'src/app/shared/models/platform';
 import { IGraphic } from 'src/app/shared/models/productGraphic';
@@ -69,17 +69,17 @@ export class EditProductComponent implements OnInit {
     return this.shopService.getGraphics();
   }
 
-  onSubmit(product: ProductFormValues) {
-    if (this.route.snapshot.url[0].path === 'edit') {
-      const updatedProduct = {...this.product, ...product, price: +product.price};
-      this.adminService.updateProduct(updatedProduct, +this.route.snapshot.paramMap.get('id')).subscribe((response: any) => {
-        this.router.navigate(['/admin']);
-      });
-    } else {
-      const newProduct = {...product, price: +product.price};
-      this.adminService.createProduct(newProduct).subscribe((response: any) => {
-        this.router.navigate(['/admin']);
-      });
-    }
-  }
+  // onSubmit(product: ProductFormValues) {
+  //   if (this.route.snapshot.url[0].path === 'edit') {
+  //     const updatedProduct = {...this.product, ...product, price: +product.price};
+  //     this.adminService.updateProduct(updatedProduct, +this.route.snapshot.paramMap.get('id')).subscribe((response: any) => {
+  //       this.router.navigate(['/admin']);
+  //     });
+  //   } else {
+  //     const newProduct = {...product, price: +product.price};
+  //     this.adminService.createProduct(newProduct).subscribe((response: any) => {
+  //       this.router.navigate(['/admin']);
+  //     });
+  //   }
+  // }
 }

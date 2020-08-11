@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
-import {ProductFormValues} from '../shared/models/products';
+import {ProductFormValues, ComponentFormValues} from '../shared/models/products';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
@@ -42,6 +42,10 @@ export class AdminService {
 
   setMainPhoto(photoId: number, productId: number) {
     return this.http.post(this.baseUrl + 'products/' + productId + '/photo/' + photoId, {});
+  }
+
+  createComponent(component: ComponentFormValues,productId: number) {
+    return this.http.put(this.baseUrl + 'products/'+ productId + '/productcomponent/', component);
   }
 
 

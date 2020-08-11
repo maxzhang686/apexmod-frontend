@@ -18,7 +18,6 @@ export class EditProductComponentComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   deleteProductComponent(productcomponentId: number) {
     this.adminService.deleteProductComponent(productcomponentId, this.product.id).subscribe(() => {
       //const photoIndex = this.product.photos.findIndex(x => x.id === productcomponentId);
