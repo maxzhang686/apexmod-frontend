@@ -9,6 +9,7 @@ export interface IProduct {
   // productBrand: string;
   productPlatform: string;
   photos: IPhoto[];
+  productComponents:IComponent[];
 }
 
 export interface IProductToCreate {
@@ -44,3 +45,43 @@ export interface IPhoto {
   fileName: string;
   isMain: boolean;
 }
+
+
+export interface IComponent {
+  id: number;
+  title: string;
+  description: string;
+  pPrice: number;
+  tPrice: number;
+  photo: IComponentPhoto;
+}
+
+export interface IComponentPhoto {
+  id: number;
+  pictureUrl: string;
+  fileName: string;
+}
+
+export interface IComponentToCreate {
+  title: string;
+  description: string;
+  pPrice: number;
+  tPrice: number;
+  productId: number;
+}
+
+export class ComponentFormValues implements IComponentToCreate {
+  title = '';
+  description = '';
+  pPrice = 0;
+  tPrice = 0;
+  productId = null;
+
+  constructor(init?: ProductFormValues) {
+    Object.assign(this, init);
+  }
+  
+}
+
+
+

@@ -31,6 +31,10 @@ export class AdminService {
       observe: 'events'
     });
   }
+  
+  deleteProductComponent(productcomponentId: number, productId: number) {
+    return this.http.delete(this.baseUrl + 'products/' + productId + '/productcomponent/' + productcomponentId);
+  }
 
   deleteProductPhoto(photoId: number, productId: number) {
     return this.http.delete(this.baseUrl + 'products/' + productId + '/photo/' + photoId);
@@ -39,5 +43,7 @@ export class AdminService {
   setMainPhoto(photoId: number, productId: number) {
     return this.http.post(this.baseUrl + 'products/' + productId + '/photo/' + photoId, {});
   }
+
+
 
 }
