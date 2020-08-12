@@ -9,8 +9,8 @@ const routes: Routes = [
   {path: '', component: AdminComponent},
   {path: 'create', component: EditProductComponent, data: {breadcrumb: 'Create'}},
   {path: 'edit/:id', component: EditProductComponent, data: {breadcrumb: 'Edit'}},
-  {path: 'edit/:id/createComponent', component: EditComponentComponent, data: {breadcrumb: 'Create-Component'}},
-  {path: 'edit/:id/component/:id', component: EditComponentComponent, data: {breadcrumb: 'Edit-Component'}}
+  {path: 'edit/:id/create', component: EditComponentComponent, data: {breadcrumb: 'Create-Component'}},
+  {path: 'edit/:id/component/:cid', component: EditComponentComponent, data: {breadcrumb: 'Edit-Component'}}
 ];
 
 @NgModule({

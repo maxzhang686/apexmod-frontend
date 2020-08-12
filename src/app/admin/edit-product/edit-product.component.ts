@@ -20,7 +20,8 @@ export class EditProductComponent implements OnInit {
   // brands: IBrand[];
   // types: IType[];
   platforms: IPlatform[];
-  graphics: IGraphic[]
+  graphics: IGraphic[];
+  success = false;
 
 
   constructor(private adminService: AdminService,
@@ -48,7 +49,7 @@ export class EditProductComponent implements OnInit {
 
   updatePrice(event: any) {
     this.product.price = event;
-    console.log(this.product.price)
+    //console.log(this.product.price)
   }
 
   loadProduct() {

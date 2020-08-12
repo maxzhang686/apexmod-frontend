@@ -13,7 +13,8 @@ import { forkJoin } from 'rxjs';
 })
 export class EditComponentComponent implements OnInit {
   component: ComponentFormValues;
-  productId :number
+  productId: number;
+  componentId: number;
 
   constructor(
     private adminService: AdminService,
@@ -26,37 +27,43 @@ export class EditComponentComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProductId();
+    if (this.route.snapshot.url[2].path === 'component') {
+      this.loadProduct();
+    }
   }
-  loadProductId(){
+
+  loadProductId() {
     this.productId = +this.route.snapshot.paramMap.get('id');
+    this.componentId = +this.route.snapshot.paramMap.get('cid');
+  }
+
+  loadProduct() {
+    this.shopService.getProduct(this.productId).subscribe((response: any) => {
+      //const component = this.component && this.platforms.find(x => x.name === response.productPlatform).id;
+      //this.product.productComponents.splice(this.product.productComponents.findIndex(p => p.id === productcomponentId), 1);
+      // this.component = response.product;
+      // this.productFormValues = {...response};
+
+      const newComponent = response.productComponents.find(
+        (x) => x.id === this.componentId
+      );
+      this.component = {...newComponent};
+
+      console.log(this.component);
+    });
   }
 
   updatePPrice(event: any) {
-    this.component.PPrice = event;
+    this.component.pPrice = event;
   }
 
   updateTPrice(event: any) {
-    this.component.TPrice = event;
+    this.component.tPrice = event;
   }
 
-  onSubmit(component: ComponentFormValues, productId: number) {
-    // if (this.route.snapshot.url[0].path === 'edit') {
-    //   const updatedProduct = {...this.product, ...product, price: +product.price};
-    //   this.adminService.updateProduct(updatedProduct, +this.route.snapshot.paramMap.get('id')).subscribe((response: any) => {
-    //     this.router.navigate(['/admin']);
-    //   });
-    // } else {
-    //   const newProduct = {...product, price: +product.price};
-    //   this.adminService.createProduct(newProduct).subscribe((response: any) => {
-    //     this.router.navigate(['/admin']);
-    //   });
-    // }
-
-    const newComponent = { ...component, PPrice: +component.PPrice, TPrice: +component.TPrice};
-    console.log(newComponent)
-    this.adminService.createComponent(newComponent, productId).subscribe((response: any) => {
-      console.log(response);
-      this.router.navigate([`/admin/edit/${productId}`]);
-    });
+  backToProduct(productId: number){
+    this.router.navigate([`/admin/edit/${productId}`])
   }
+
+  
 }

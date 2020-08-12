@@ -30,7 +30,7 @@ export class EditProductComponentComponent implements OnInit {
   }
 
   showComponent( component : any ){
-    console.log(component)
+    //console.log(component)
   }
 
 }

@@ -19,6 +19,7 @@ export class EditProductFormComponent implements OnInit {
   // @Input() types: IType[];
   @Input() platforms: IPlatform[];
   @Input() graphics: IGraphic[];
+  success = false;
 
   constructor(private route: ActivatedRoute, private adminService: AdminService, private router: Router) { }
 
@@ -32,23 +33,29 @@ export class EditProductFormComponent implements OnInit {
       this.adminService.updateProduct(updatedProduct, +this.route.snapshot.paramMap.get('id')).subscribe((response: any) => {
         
         this.router.navigate([`/admin/edit/${response.id}`]);
-        alert(`${response.name} updated!`);
+        // alert(`${response.name} updated!`);
+        this.success = true;
       });
     } else {
       const newProduct = {...product, price: +product.price};
       
       console.log(product, product.price);
-      this.adminService.createProduct(newProduct).subscribe((response: any) => {
-        
+      this.adminService.createProduct(newProduct).subscribe((response: any) => {       
         this.router.navigate([`/admin/edit/${response.id}`]);
-        alert(`${response.name} created!`);
+        // alert(`${response.name} created!`);
+        // this.success = true;
       });
     }
   }
 
   updatePrice(event: any) {
     this.product.price = event;
-    console.log(this.product)
+    //console.log(this.product)
+  }
+
+
+  closeAlert(){
+    this.success = false;
   }
 
 }
