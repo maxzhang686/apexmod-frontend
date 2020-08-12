@@ -31,10 +31,7 @@ export class AdminService {
       observe: 'events'
     });
   }
-  
-  deleteProductComponent(productcomponentId: number, productId: number) {
-    return this.http.delete(this.baseUrl + 'products/' + productId + '/productcomponent/' + productcomponentId);
-  }
+
 
   deleteProductPhoto(photoId: number, productId: number) {
     return this.http.delete(this.baseUrl + 'products/' + productId + '/photo/' + photoId);
@@ -48,6 +45,29 @@ export class AdminService {
     return this.http.put(this.baseUrl + 'products/'+ productId + '/productcomponent/', component);
   }
 
+  updateComponent(component: ComponentFormValues, id: number) {
+    return this.http.put(this.baseUrl + 'productComponent/' + id, component);
+  }
+  
+  deleteProductComponent(productcomponentId: number, productId: number) {
+    return this.http.delete(this.baseUrl + 'products/' + productId + '/productcomponent/' + productcomponentId);
+  }
+
+
+
+  uploadComponentImage(file: File, id: number) {
+    const formData = new FormData();
+    formData.append('photo', file, 'image.png');
+    return this.http.put(this.baseUrl + 'productcomponent/' + id + '/componentphoto', formData, {
+      reportProgress: true,
+      observe: 'events'
+    });
+  }
+
+
+  deleteComponentPhoto(componentId: number,photoId: number) {
+    return this.http.delete(this.baseUrl + 'productcomponent/' + componentId + '/componentphoto/' + photoId);
+  }
 
 
 }

@@ -77,7 +77,7 @@ export class ComponentFormValues implements IComponentToCreate {
   tPrice = 0;
   productId = null;
 
-  constructor(init?: ProductFormValues) {
+  constructor(init?: ComponentFormValues) {
     Object.assign(this, init);
   }
   

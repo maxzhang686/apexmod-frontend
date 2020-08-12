@@ -14,11 +14,13 @@ import {forkJoin} from 'rxjs';
   templateUrl: './edit-product.component.html',
   styleUrls: ['./edit-product.component.scss']
 })
+
 export class EditProductComponent implements OnInit {
   product: IProduct;
   productFormValues: ProductFormValues;
   // brands: IBrand[];
   // types: IType[];
+  
   platforms: IPlatform[];
   graphics: IGraphic[];
   success = false;
@@ -31,10 +33,10 @@ export class EditProductComponent implements OnInit {
     this.productFormValues = new ProductFormValues();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     const platForms = this.getPlatforms();
     const graphics = this.getGraphics();
-
+    this.loadProduct();
     forkJoin([graphics, platForms]).subscribe(results => {
       this.graphics = results[0];
       this.platforms = results[1];
@@ -42,9 +44,13 @@ export class EditProductComponent implements OnInit {
       console.log(error);
     }, () => {
       if (this.route.snapshot.url[0].path === 'edit') {
-        this.loadProduct();
+        // this.loadProduct();
       }
     });
+
+    // if (this.route.snapshot.url[0].path === 'edit') {
+    //   this.loadProduct();
+    // }
   }
 
   updatePrice(event: any) {
@@ -57,7 +63,9 @@ export class EditProductComponent implements OnInit {
       const productPlatformId = this.platforms && this.platforms.find(x => x.name === response.productPlatform).id;
       const productGraphicId = this.graphics && this.graphics.find(x => x.name === response.productGraphic).id;
       this.product = response;
+      console.log("11", this.product)
       this.productFormValues = {...response, productPlatformId, productGraphicId};
+      console.log("2", this.productFormValues)
       
     });
   }
@@ -70,17 +78,4 @@ export class EditProductComponent implements OnInit {
     return this.shopService.getGraphics();
   }
 
-  // onSubmit(product: ProductFormValues) {
-  //   if (this.route.snapshot.url[0].path === 'edit') {
-  //     const updatedProduct = {...this.product, ...product, price: +product.price};
-  //     this.adminService.updateProduct(updatedProduct, +this.route.snapshot.paramMap.get('id')).subscribe((response: any) => {
-  //       this.router.navigate(['/admin']);
-  //     });
-  //   } else {
-  //     const newProduct = {...product, price: +product.price};
-  //     this.adminService.createProduct(newProduct).subscribe((response: any) => {
-  //       this.router.navigate(['/admin']);
-  //     });
-  //   }
-  // }
 }

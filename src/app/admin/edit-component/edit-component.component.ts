@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { ShopService } from '../../shop/shop.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ComponentFormValues, IProduct } from '../../shared/models/products';
+import { ComponentFormValues, IProduct, IComponent } from '../../shared/models/products';
 
-import { forkJoin } from 'rxjs';
+
 
 @Component({
   selector: 'app-edit-component',
@@ -12,6 +12,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./edit-component.component.scss'],
 })
 export class EditComponentComponent implements OnInit {
+  componentData: IComponent;
   component: ComponentFormValues;
   productId: number;
   componentId: number;
@@ -47,8 +48,9 @@ export class EditComponentComponent implements OnInit {
       const newComponent = response.productComponents.find(
         (x) => x.id === this.componentId
       );
+      
       this.component = {...newComponent};
-
+      // this.componentData = {...newComponent}
       console.log(this.component);
     });
   }

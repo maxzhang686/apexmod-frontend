@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ComponentFormValues } from 'src/app/shared/models/products';
+import { ComponentFormValues, IProduct } from 'src/app/shared/models/products';
 import { AdminService } from '../admin.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ShopService } from 'src/app/shop/shop.service';
@@ -7,18 +7,21 @@ import { ShopService } from 'src/app/shop/shop.service';
 @Component({
   selector: 'app-edit-component-form',
   templateUrl: './edit-component-form.component.html',
-  styleUrls: ['./edit-component-form.component.scss']
+  styleUrls: ['./edit-component-form.component.scss'],
 })
 export class EditComponentFormComponent implements OnInit {
   @Input() component: ComponentFormValues;
+  @Input() productId: number;
+  @Input() componentId: number;
 
-  constructor(private adminService: AdminService,
+  constructor(
+    private adminService: AdminService,
     private shopService: ShopService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   updatePPrice(event: any) {
     this.component.pPrice = event;
@@ -30,30 +33,30 @@ export class EditComponentFormComponent implements OnInit {
 
   onSubmit(component: ComponentFormValues, productId: number) {
     if (this.route.snapshot.url[2].path === 'component') {
-      // const updatedProduct = {...this.product, ...product, price: +product.price};
-      // this.adminService.updateProduct(updatedProduct, +this.route.snapshot.paramMap.get('id')).subscribe((response: any) => {
-      //   this.router.navigate(['/admin']);
-      // });
+      const updatedComponent = {
+        ...this.component,
+        ...component,
+        PPrice: +component.pPrice,
+        TPrice: +component.tPrice,
+        productId: productId,
+      };
+      this.adminService
+        .updateComponent(updatedComponent, this.componentId)
+        .subscribe((response: any) => {
+          this.router.navigate([`/admin/edit/${productId}`]);
+        });
     } else {
-      // const newProduct = {...product, price: +product.price};
-      // this.adminService.createProduct(newProduct).subscribe((response: any) => {
-      //   this.router.navigate(['/admin']);
-      // });
-
+      const newComponent = {
+        ...component,
+        PPrice: +component.pPrice,
+        TPrice: +component.tPrice,
+      };
+      //console.log(newComponent)
+      this.adminService
+        .createComponent(newComponent, productId)
+        .subscribe((response: any) => {
+          this.router.navigate([`/admin/edit/${productId}`]);
+        });
     }
-    const newComponent = {
-      ...component,
-      PPrice: +component.pPrice,
-      TPrice: +component.tPrice,
-    };
-    //console.log(newComponent)
-    this.adminService
-      .createComponent(newComponent, productId)
-      .subscribe((response: any) => {
-        console.log(response);
-        //this.router.navigate([`/admin/edit/${productId}`]);
-      });
   }
-
-
 }
