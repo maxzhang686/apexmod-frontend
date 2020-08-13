@@ -87,11 +87,11 @@ export class ShopService {
   }
 
   getProduct(id: number) {
-    const product = this.products.find(p => p.id === id);
+   // const product = this.products.find(p => p.id === id);
 
-    if (product) {
-      return of(product);
-    }
+    // if (product) {
+    //   return of(product);
+    // }
 
     return this.http.get<IProduct>(this.baseUrl + 'products/' + id);
   }

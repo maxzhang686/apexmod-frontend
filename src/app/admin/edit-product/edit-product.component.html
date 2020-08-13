@@ -18,12 +18,12 @@
                 ></app-edit-product-form>
               </div>
             </tab>
-            <tab heading="Edit Photos">
+            <tab *ngIf="edit" heading="Edit Photos">
               <app-edit-product-photos
                 [product]="product"
               ></app-edit-product-photos>
             </tab>
-            <tab heading="Edit Components">
+            <tab *ngIf="edit" heading="Edit Components">
               <app-edit-product-component
                 [product]="product"
               ></app-edit-product-component>

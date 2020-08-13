@@ -22,7 +22,7 @@
                 ></app-edit-component-form>
               </div>
             </tab>
-            <tab heading="Edit Photos">
+            <tab *ngIf="edit" heading="Edit Photos">
               <app-edit-component-photo [component]="component"></app-edit-component-photo>
             </tab>
           </tabset>

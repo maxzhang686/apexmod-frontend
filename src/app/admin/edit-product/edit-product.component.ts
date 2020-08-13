@@ -24,6 +24,7 @@ export class EditProductComponent implements OnInit {
   platforms: IPlatform[];
   graphics: IGraphic[];
   success = false;
+  edit = true;
 
 
   constructor(private adminService: AdminService,
@@ -36,7 +37,6 @@ export class EditProductComponent implements OnInit {
   ngOnInit() {
     const platForms = this.getPlatforms();
     const graphics = this.getGraphics();
-    this.loadProduct();
     forkJoin([graphics, platForms]).subscribe(results => {
       this.graphics = results[0];
       this.platforms = results[1];
@@ -44,13 +44,12 @@ export class EditProductComponent implements OnInit {
       console.log(error);
     }, () => {
       if (this.route.snapshot.url[0].path === 'edit') {
-        // this.loadProduct();
+        this.loadProduct();
       }
     });
-
-    // if (this.route.snapshot.url[0].path === 'edit') {
-    //   this.loadProduct();
-    // }
+    if (this.route.snapshot.url[0].path === 'create') {
+      this.edit = false;
+    }
   }
 
   updatePrice(event: any) {
@@ -63,9 +62,9 @@ export class EditProductComponent implements OnInit {
       const productPlatformId = this.platforms && this.platforms.find(x => x.name === response.productPlatform).id;
       const productGraphicId = this.graphics && this.graphics.find(x => x.name === response.productGraphic).id;
       this.product = response;
-      console.log("11", this.product)
+      //console.log("product detail:" , this.product)
       this.productFormValues = {...response, productPlatformId, productGraphicId};
-      console.log("2", this.productFormValues)
+
       
     });
   }

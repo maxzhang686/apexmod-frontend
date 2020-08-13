@@ -16,6 +16,7 @@ export class EditComponentComponent implements OnInit {
   component: ComponentFormValues;
   productId: number;
   componentId: number;
+  edit = true;
 
   constructor(
     private adminService: AdminService,
@@ -30,6 +31,10 @@ export class EditComponentComponent implements OnInit {
     this.loadProductId();
     if (this.route.snapshot.url[2].path === 'component') {
       this.loadProduct();
+    }
+   // console.log("id",this.componentId);
+   if (this.route.snapshot.url[2].path === 'create') {
+    this.edit = false;
     }
   }
 
@@ -51,7 +56,7 @@ export class EditComponentComponent implements OnInit {
       
       this.component = {...newComponent};
       // this.componentData = {...newComponent}
-      console.log(this.component);
+      console.log("comp",this.component);
     });
   }
 

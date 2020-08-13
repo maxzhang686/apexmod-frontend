@@ -52,7 +52,7 @@ export class EditComponentPhotoComponent implements OnInit {
   deletePhoto(componentId:number, photoId: number) {
     this.adminService.deleteComponentPhoto(componentId, photoId ).subscribe(() => {
       //const photoIndex = this.product.photos.findIndex(x => x.id === photoId);
-     // this.component.photo = null;
+     this.component.photo = null;
     }, error => {
       this.toast.error('Problem deleting photo');
       console.log(error);

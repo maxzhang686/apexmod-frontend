@@ -3,7 +3,7 @@
     <ng-container *ngIf="!addPhotoMode">
       <div class="d-flex justify-content-between mb-3">
         <h3>Product Photos</h3>
-        <button class="btn btn-primary" (click)="addPhotoModeToggle()">
+        <button *ngIf="!component.photo" class="btn btn-primary" (click)="addPhotoModeToggle()">
           Add New Photo
         </button>
       </div>
@@ -26,10 +26,15 @@
     </ng-container>
     <ng-container *ngIf="addPhotoMode">
       <div class="d-flex justify-content-between mb-3">
-        <h3>Add new product image</h3>
+        <h3 class="text-primary">Add new product image</h3>
         <button class="btn btn-outline-secondary" (click)="addPhotoModeToggle()">Cancel</button>
       </div>
-      <app-photo-widget></app-photo-widget>
+      <div class="progress form-group" *ngIf="progress > 0">
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
+          {{progress}}%
+        </div>
+      </div>
+      <app-photo-widget (addFile)="uploadFile($event)"></app-photo-widget>
     </ng-container>
   </div>
 </div>

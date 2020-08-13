@@ -13,6 +13,7 @@ export class EditComponentFormComponent implements OnInit {
   @Input() component: ComponentFormValues;
   @Input() productId: number;
   @Input() componentId: number;
+  success = false;
 
   constructor(
     private adminService: AdminService,
@@ -31,32 +32,38 @@ export class EditComponentFormComponent implements OnInit {
     this.component.tPrice = event;
   }
 
-  onSubmit(component: ComponentFormValues, productId: number) {
+  onSubmit(componentFormValues: ComponentFormValues, productId: number) {
     if (this.route.snapshot.url[2].path === 'component') {
       const updatedComponent = {
         ...this.component,
-        ...component,
-        PPrice: +component.pPrice,
-        TPrice: +component.tPrice,
+        ...componentFormValues,
+        PPrice: +componentFormValues.pPrice,
+        TPrice: +componentFormValues.tPrice,
         productId: productId,
       };
       this.adminService
         .updateComponent(updatedComponent, this.componentId)
         .subscribe((response: any) => {
-          this.router.navigate([`/admin/edit/${productId}`]);
+          this.router.navigate([`/admin/edit/${productId}/component/${this.componentId}`]);
+          this.success = true;
         });
     } else {
       const newComponent = {
-        ...component,
-        PPrice: +component.pPrice,
-        TPrice: +component.tPrice,
+        ...componentFormValues,
+        PPrice: +componentFormValues.pPrice,
+        TPrice: +componentFormValues.tPrice,
       };
-      //console.log(newComponent)
+ 
       this.adminService
         .createComponent(newComponent, productId)
         .subscribe((response: any) => {
-          this.router.navigate([`/admin/edit/${productId}`]);
+          const newComponentId = response.productComponents.slice(-1)[0].id;
+          this.router.navigate([`/admin/edit/${productId}/component/${newComponentId}`]);    
         });
     }
+  }
+
+  closeAlert(){
+    this.success = false;
   }
 }
