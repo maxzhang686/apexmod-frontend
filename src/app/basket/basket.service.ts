@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
-import { IBasket, IBasketItem, Basket, IBasketTotals } from '../shared/models/basket';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { IBasket, IBasketItem, Basket, IBasketTotals, IBasketQuantity } from '../shared/models/basket';
 import { map } from 'rxjs/operators';
 import { IProduct } from '../shared/models/products';
 import { IDeliveryMethod } from '../shared/models/deliveryMethod';
@@ -18,6 +18,9 @@ export class BasketService {
   private basketTotalSource = new BehaviorSubject<IBasketTotals>(null);
   basketTotal$ = this.basketTotalSource.asObservable();
   shipping = 0;
+  private quantityNumSource = new BehaviorSubject<IBasketQuantity>(null);
+  quantityNum$ = this.quantityNumSource.asObservable();
+
 
   constructor(private http: HttpClient) { }
 
@@ -46,6 +49,7 @@ export class BasketService {
           this.basketSource.next(basket);
           this.shipping = basket.shippingPrice;
          this.calculateTotals();
+         this.calculateItemsQuantity();
         })
       );
   }
@@ -55,6 +59,7 @@ export class BasketService {
       this.basketSource.next(response);
       
       this.calculateTotals();
+      this.calculateItemsQuantity();
     }, error => {
       console.log(error);
     });
@@ -118,6 +123,7 @@ export class BasketService {
     return this.http.delete(this.baseUrl + 'basket?id=' + basket.id).subscribe(() => {
       this.basketSource.next(null);
       this.basketTotalSource.next(null);
+      this.quantityNumSource.next(null);
       localStorage.removeItem('basket_id');
     }, error => {
       console.log(error);
@@ -128,9 +134,20 @@ export class BasketService {
     const basket = this.getCurrentBasketValue();
     const shipping = this.shipping;
     const subtotal = basket.items.reduce((prevValue, item) => (item.price * item.quantity) + prevValue, 0);
+    
     const total = subtotal + shipping;
     this.basketTotalSource.next({shipping, total, subtotal});
   }
+
+  private calculateItemsQuantity(){
+    const basket = this.getCurrentBasketValue();
+    const quantity =  basket.items.reduce((prevValue, item) =>  item.quantity + prevValue, 0);
+    this.quantityNumSource.next({quantity})
+  }
+
+
+
+
 
   private addOrUpdateItem(items: IBasketItem[], itemToAdd: IBasketItem, quantity: number): IBasketItem[] {
     const index = items.findIndex(i => i.id === itemToAdd.id);

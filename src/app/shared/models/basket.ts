@@ -9,6 +9,10 @@ export interface IBasket {
     shippingPrice?: number;
 }
 
+export interface IBasketQuantity {
+    quantity: number;
+}
+
 export interface IBasketItem {
     id: number;
     productName: string;
