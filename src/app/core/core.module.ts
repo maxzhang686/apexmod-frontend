@@ -9,9 +9,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { SectionHeaderComponent } from './section-header/section-header.component';
 import {BreadcrumbModule} from 'xng-breadcrumb';
 import { SharedModule } from '../shared/shared.module';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [NavBarComponent, TestErrorComponent, NotFoundComponent, ServerErrorComponent, SectionHeaderComponent],
+  declarations: [NavBarComponent, TestErrorComponent, NotFoundComponent, ServerErrorComponent, SectionHeaderComponent, FooterComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -22,6 +23,6 @@ import { SharedModule } from '../shared/shared.module';
       preventDuplicates: true,
     })
   ],
-  exports: [NavBarComponent,SectionHeaderComponent]
+  exports: [NavBarComponent,SectionHeaderComponent,FooterComponent]
 })
 export class CoreModule { }
