@@ -5,11 +5,12 @@ export interface IProduct {
   price: number;
   pictureUrl: string;
   // productType: string;
-  productGraphic: string;
+  // productGraphic: string;
   // productBrand: string;
-  productPlatform: string;
+
+  // tags:[]
   photos: IPhoto[];
-  productComponents:IComponent[];
+  childProducts:IComponent[];
 }
 
 export interface IProductToCreate {
@@ -51,9 +52,8 @@ export interface IComponent {
   id: number;
   title: string;
   description: string;
-  pPrice: number;
-  tPrice: number;
-  photo: IComponentPhoto;
+  price: number;
+  pictureUrl: string;
 }
 
 export interface IComponentPhoto {

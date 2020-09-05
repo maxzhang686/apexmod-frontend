@@ -13,7 +13,8 @@
                     <app-checkout-review [appStepper]='appStepper'></app-checkout-review>
                 </cdk-step>
                 <cdk-step [label]="'Payment'">
-                    <app-checkout-payment [checkoutForm]="checkoutForm"></app-checkout-payment>
+                    <!-- <app-checkout-payment [checkoutForm]="checkoutForm"></app-checkout-payment> -->
+                    <app-checkout-paypal [totalPay]="(basketTotals$ | async).total"></app-checkout-paypal>
                 </cdk-step>
             </app-stepper>
         </div>

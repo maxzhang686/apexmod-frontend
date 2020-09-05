@@ -34,12 +34,30 @@ export class EditProductComponent implements OnInit {
     this.productFormValues = new ProductFormValues();
   }
 
+  // ngOnInit() {
+  //   const platForms = this.getPlatforms();
+  //   const graphics = this.getGraphics();
+  //   forkJoin([graphics, platForms]).subscribe(results => {
+  //     this.graphics = results[0];
+  //     this.platforms = results[1];
+  //   }, error => {
+  //     console.log(error);
+  //   }, () => {
+  //     if (this.route.snapshot.url[0].path === 'edit') {
+  //       this.loadProduct();
+  //     }
+  //   });
+  //   if (this.route.snapshot.url[0].path === 'create') {
+  //     this.edit = false;
+  //   }
+  // }
+
   ngOnInit() {
-    const platForms = this.getPlatforms();
-    const graphics = this.getGraphics();
-    forkJoin([graphics, platForms]).subscribe(results => {
-      this.graphics = results[0];
-      this.platforms = results[1];
+    // const platForms = this.getPlatforms();
+    // const graphics = this.getGraphics();
+    forkJoin().subscribe(results => {
+      // this.graphics = results[0];
+      // this.platforms = results[1];
     }, error => {
       console.log(error);
     }, () => {
@@ -69,12 +87,12 @@ export class EditProductComponent implements OnInit {
     });
   }
 
-  getPlatforms() {
-    return this.shopService.getPlatforms();
-  }
+  // getPlatforms() {
+  //   return this.shopService.getPlatforms();
+  // }
 
-  getGraphics() {
-    return this.shopService.getGraphics();
-  }
+  // getGraphics() {
+  //   return this.shopService.getGraphics();
+  // }
 
 }
