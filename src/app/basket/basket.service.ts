@@ -69,13 +69,14 @@ export class BasketService {
     return this.basketSource.value;
   }
 
-  addItemToBasket(item: IProduct, quantity = 1) {
-    const itemToAdd: IBasketItem = this.mapProductItemToBasketItem(item, quantity);
+  addItemToBasket(item: IProduct, quantity = 1,childProducts:[]) {
+    const itemToAdd: IBasketItem = this.mapProductItemToBasketItem(item, quantity,childProducts);
     let basket = this.getCurrentBasketValue();
     if (basket === null) {
       basket = this.createBasket();
     }
     console.log(basket)
+    console.log("itemToAdd",itemToAdd)
    basket.items = this.addOrUpdateItem(basket.items, itemToAdd, quantity);
    this.setBasket(basket);
   }
@@ -154,7 +155,11 @@ export class BasketService {
     if (index === -1) {
       itemToAdd.quantity = quantity;
       items.push(itemToAdd);
-    } else {
+    } else if(itemToAdd.productCategory === "pc"){
+      itemToAdd.quantity = quantity;
+      items.push(itemToAdd);
+    }
+    else {
       items[index].quantity += quantity;
     }
     return items;
@@ -166,17 +171,19 @@ export class BasketService {
     return basket;
   }
 
-  private mapProductItemToBasketItem(item: IProduct, quantity: number): IBasketItem {
+  private mapProductItemToBasketItem(item: IProduct, quantity: number,childProducts:[]): IBasketItem {
     return {
       id: item.id,
       productName: item.name,
       price: item.price,
       pictureUrl: item.pictureUrl,
       quantity,
+      childProducts: childProducts,
+      productCategory: item.productCategory
       // brand: item.productBrand,
-      platform: item.productPlatform,
-      graphic: item.productGraphic
       // type: item.productType
+      // platform: item.productPlatform,
+      // graphic: item.productGraphic
     };
   }
 }

@@ -13,6 +13,7 @@
               <div class="col-lg-8">
                 <app-edit-product-form
                   [product]="productFormValues"
+                  [edit]="edit"
 
                 ></app-edit-product-form>
                 <!-- <app-edit-product-form
@@ -27,11 +28,11 @@
                 [product]="product"
               ></app-edit-product-photos>
             </tab>
-            <!-- <tab *ngIf="edit" heading="Edit Components">
+            <tab *ngIf="edit" heading="Edit Components">
               <app-edit-product-component
                 [product]="product"
               ></app-edit-product-component>
-            </tab> -->
+            </tab>
           </tabset>
         </div>
       </div>

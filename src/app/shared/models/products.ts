@@ -11,6 +11,11 @@ export interface IProduct {
   // tags:[]
   photos: IPhoto[];
   childProducts:IComponent[];
+  productCategory:string;
+  quantity: number;
+  tags: any;
+  isPublished: boolean;
+
 }
 
 export interface IProductToCreate {
@@ -18,10 +23,14 @@ export interface IProductToCreate {
   description: string;
   price: number;
   pictureUrl: string;
+  productcategoryid: number;
+  producttagids :number[]
+  childproductids : number[]
+  isPublished: boolean;
   // productTypeId: number;
-  productGraphicId: number;
+  // productGraphicId: number;
   // productBrand: string;
-  productPlatformId: number;
+  // productPlatformId: number;
 }
 
 export class ProductFormValues implements IProductToCreate {
@@ -29,10 +38,29 @@ export class ProductFormValues implements IProductToCreate {
   description = '';
   price = 0;
   pictureUrl = '';
+  productcategoryid= 1;
+  producttagids = [
+    1,
+    2
+  ];
+  childproductids = [
+    17,
+    13,
+    12,
+    11,
+    10
+  ];
+  isPublished = true;
+
+  childProducts='';
+  productCategory ='';
+  tags ='';
   // productBrandId: number;
-  productPlatformId: number;
   // productTypeId: number;
-  productGraphicId: number;
+
+
+  // productPlatformId: number;
+  // productGraphicId: number;
 
   constructor(init?: ProductFormValues) {
     Object.assign(this, init);
@@ -50,10 +78,14 @@ export interface IPhoto {
 
 export interface IComponent {
   id: number;
-  title: string;
+  // title: string;
   description: string;
   price: number;
   pictureUrl: string;
+  name: string,
+  category: string,
+  isPublished: true,
+  default: boolean
 }
 
 export interface IComponentPhoto {
@@ -84,4 +116,8 @@ export class ComponentFormValues implements IComponentToCreate {
 }
 
 
+export interface IChildrenComponent {
+  category: string;
+  itemsList:[]
 
+}

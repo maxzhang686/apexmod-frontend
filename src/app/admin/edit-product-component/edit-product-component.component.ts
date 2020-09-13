@@ -22,7 +22,9 @@ export class EditProductComponentComponent implements OnInit {
     this.adminService.deleteProductComponent(productcomponentId, this.product.id).subscribe(() => {
       //const photoIndex = this.product.photos.findIndex(x => x.id === productcomponentId);
       //this.product.photos.splice(photoIndex, 1);
-      this.product.productComponents.splice(this.product.productComponents.findIndex(p => p.id === productcomponentId), 1);
+
+      
+      // this.product.productComponents.splice(this.product.productComponents.findIndex(p => p.id === productcomponentId), 1);
     }, error => {
       //this.toast.error('Problem deleting photo');
       console.log(error);

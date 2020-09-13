@@ -1,13 +1,51 @@
-<div> paypal will dispaly here</div>
+<h3>How would you like to pay?</h3>
 
 <!-- <div *ngIf="paidFor">
   <h1>Payment succeed!</h1>
 </div> -->
 
+
+<!-- <div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'paypal')">PayPal</button>
+  <button class="tablinks" onclick="openCity(event, 'weichat')">Weichat</button>
+  <button class="tablinks" onclick="openCity(event, 'alipay')">Alipay</button>
+</div>
+
+
+<div id="paypal" class="tabcontent">
+  
+  <h3>PayPal</h3>
   <div #paypal></div>
+</div>
+
+<div id="weichat" class="tabcontent">
+  <h3>Weichat</h3>
+  <img src="https://i.ibb.co/LNM5h7t/Wechat-IMG32.jpg" style="width: 380px;">
+</div>
+
+<div id="alipay" class="tabcontent">
+  <h3>Alipay</h3>
+
+</div> -->
+
+
+<div class="tab-panel">
+  <tabset class="product-tabset">
+    <tab heading="PayPal">
+<div #paypal></div>
+    </tab>
+    <tab heading="WeChat Pay">
+<img src="https://i.ibb.co/LNM5h7t/Wechat-IMG32.jpg" style="width: 350px;">
+    </tab>
+    <tab heading="AliPay">
+      <img src="https://i.ibb.co/LNM5h7t/Wechat-IMG32.jpg" style="width: 350px;">
+    </tab>
+  </tabset>
+</div>
 
 
 
+  
 
 
 

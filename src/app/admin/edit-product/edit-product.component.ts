@@ -21,8 +21,8 @@ export class EditProductComponent implements OnInit {
   // brands: IBrand[];
   // types: IType[];
   
-  platforms: IPlatform[];
-  graphics: IGraphic[];
+  // platforms: IPlatform[];
+  // graphics: IGraphic[];
   success = false;
   edit = true;
 
@@ -77,12 +77,12 @@ export class EditProductComponent implements OnInit {
 
   loadProduct() {
     this.shopService.getProduct(+this.route.snapshot.paramMap.get('id')).subscribe((response: any) => {
-      const productPlatformId = this.platforms && this.platforms.find(x => x.name === response.productPlatform).id;
-      const productGraphicId = this.graphics && this.graphics.find(x => x.name === response.productGraphic).id;
+      // const productPlatformId = this.platforms && this.platforms.find(x => x.name === response.productPlatform).id;
+      // const productGraphicId = this.graphics && this.graphics.find(x => x.name === response.productGraphic).id;
       this.product = response;
-      //console.log("product detail:" , this.product)
-      this.productFormValues = {...response, productPlatformId, productGraphicId};
-
+      console.log("product detail:" , this.product)
+      this.productFormValues = {...response};
+      console.log(1, this.productFormValues);
       
     });
   }

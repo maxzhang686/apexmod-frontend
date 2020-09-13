@@ -35,6 +35,8 @@ export class CheckoutPaypalComponent implements OnInit {
     private router: Router
   ) { }
 
+
+
   ngOnInit() {
 
     paypal

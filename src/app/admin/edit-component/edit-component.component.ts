@@ -28,7 +28,7 @@ export class EditComponentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadProductId();
+    //this.loadProductId();
     if (this.route.snapshot.url[2].path === 'component') {
       this.loadProduct();
     }

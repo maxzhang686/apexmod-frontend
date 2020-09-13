@@ -23,9 +23,7 @@
         *ngIf="name.invalid && (name.dirty || name.touched)"
         class="invalid-feedback"
       >
-        <div *ngIf="name.errors.required">
-          Product Name is required
-        </div>
+        <div *ngIf="name.errors.required">Product Name is required</div>
       </div>
     </div>
     <div class="form-group col-md-6">
@@ -50,9 +48,7 @@
         *ngIf="price.invalid && (price.dirty || price.touched)"
         class="invalid-feedback"
       >
-        <div *ngIf="price.errors.required">
-          Product price is required
-        </div>
+        <div *ngIf="price.errors.required">Product price is required</div>
         <div *ngIf="price.errors.pattern">
           Product price needs to be decimal value
         </div>
@@ -62,7 +58,8 @@
       </div>
     </div>
   </div>
-  <div class="form-row">
+
+  <div *ngIf="edit" class="form-row">
     <div class="form-group col-md-12">
       <label for="description">Description</label>
       <textarea
@@ -84,12 +81,11 @@
         "
         class="invalid-feedback"
       >
-        <div *ngIf="description.errors.required">
-          Description is required
-        </div>
+        <div *ngIf="description.errors.required">Description is required</div>
       </div>
     </div>
   </div>
+
   <div class="form-row">
     <!-- <div class="form-group col-md-6">
       <label for="brand">PlatForm</label>
@@ -126,6 +122,33 @@
       </select>
     </div> -->
   </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="isPublished">IsPublished</label>
+      <select
+        id="isPublished"
+        class="form-control"
+        name="isPublished"
+        [(ngModel)]="product.isPublished"
+        required
+      >
+        <option [selected]="product.isPublished === true">True</option>
+        <option [selected]="product.isPublished === false">False</option>
+      </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="type">Category</label>
+      <select id="type" class="form-control" name="productGraphicId" required>
+        <option>Cpu</option>
+        <option>Case</option>
+      </select>
+    </div>
+  </div>
+
+
+  
+
   <div class="float-right">
     <button
       [disabled]="!productForm.valid"

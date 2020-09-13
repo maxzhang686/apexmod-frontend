@@ -15,14 +15,17 @@ export interface IBasketQuantity {
 
 export interface IBasketItem {
     id: number;
-    productName: string;
     price: number;
     quantity: number;
+    productName:string;
     pictureUrl: string;
     // brand: string;
-    platform: string;
     // type: string;
-    graphic: string;
+    // platform: string;
+    // graphic: string;
+    childProducts:[]
+    productCategory:string;
+
 }
 
 export class Basket implements IBasket {
