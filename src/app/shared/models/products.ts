@@ -23,9 +23,9 @@ export interface IProductToCreate {
   description: string;
   price: number;
   pictureUrl: string;
-  productcategoryid: number;
-  producttagids :number[]
-  childproductids : number[]
+  productCategoryId: number;
+  productTagIds :number[];
+  childProductIds : IChildProduct[];
   isPublished: boolean;
   // productTypeId: number;
   // productGraphicId: number;
@@ -38,27 +38,27 @@ export class ProductFormValues implements IProductToCreate {
   description = '';
   price = 0;
   pictureUrl = '';
-  productcategoryid= 1;
-  producttagids = [
+  productCategoryId = 3;
+  productTagIds = [
     1,
     2
   ];
-  childproductids = [
-    17,
-    13,
-    12,
-    11,
-    10
+  childProductIds = [
+    {
+      childProductId: 19,
+      IsDefault: true
+    },
+    {
+      childProductId: 20,
+      IsDefault: false
+    }
   ];
-  isPublished = true;
-
+  isPublished = false;
   childProducts='';
   productCategory ='';
   tags ='';
   // productBrandId: number;
   // productTypeId: number;
-
-
   // productPlatformId: number;
   // productGraphicId: number;
 
@@ -73,6 +73,11 @@ export interface IPhoto {
   pictureUrl: string;
   fileName: string;
   isMain: boolean;
+}
+
+export interface IChildProduct {
+  childProductId: number,
+  IsDefault: boolean
 }
 
 

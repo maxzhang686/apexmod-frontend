@@ -33,9 +33,9 @@ export class ShopComponent implements OnInit {
   ngOnInit() {
     this.getProducts(true);
     // this.getBrands();
-    this.getPlatforms();
-    this.getGraphics();
     // this.getTypes();
+    // this.getPlatforms();
+    // this.getGraphics();
   }
 
   getProducts(useCache = false) {
@@ -54,21 +54,8 @@ export class ShopComponent implements OnInit {
   //     console.log(error);
   //   });
   // }
-  getPlatforms() {
-    this.shopService.getPlatforms().subscribe(response => {
-      this.platforms = [{ id: 0, name: 'All' }, ...response];
-    }, error => {
-      console.log(error);
-    });
-  }
 
-  getGraphics() {
-    this.shopService.getGraphics().subscribe(response => {
-      this.graphics = [{ id: 0, name: 'All' }, ...response];
-    }, error => {
-      console.log(error);
-    });
-  }
+
   // getTypes() {
   //   this.shopService.getTypes().subscribe(response => {
   //     this.types = [{ id: 0, name: 'All' }, ...response];
@@ -76,6 +63,23 @@ export class ShopComponent implements OnInit {
   //     console.log(error);
   //   });
   // }
+
+  // getPlatforms() {
+  //   this.shopService.getPlatforms().subscribe(response => {
+  //     this.platforms = [{ id: 0, name: 'All' }, ...response];
+  //   }, error => {
+  //     console.log(error);
+  //   });
+  // }
+
+  // getGraphics() {
+  //   this.shopService.getGraphics().subscribe(response => {
+  //     this.graphics = [{ id: 0, name: 'All' }, ...response];
+  //   }, error => {
+  //     console.log(error);
+  //   });
+  // }
+
 
   // onBrandSelected(brandId: number) {
   //   const params = this.shopService.getShopParams();

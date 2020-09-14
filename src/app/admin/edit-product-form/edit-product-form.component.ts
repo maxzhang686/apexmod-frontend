@@ -5,6 +5,7 @@ import { IProduct, ProductFormValues } from '../../shared/models/products';
 
 import { IPlatform } from 'src/app/shared/models/platform';
 import { IGraphic } from 'src/app/shared/models/productGraphic';
+import { ICategory } from 'src/app/shared/models/category';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from '../admin.service';
 
@@ -15,16 +16,23 @@ import { AdminService } from '../admin.service';
 })
 export class EditProductFormComponent implements OnInit {
   @Input() product: ProductFormValues;
-   @Input() edit: boolean;
+  @Input() edit: boolean;
   // @Input() brands: IBrand[];
   // @Input() types: IType[];
   // @Input() platforms: IPlatform[];
-  // @Input() graphics: IGraphic[];
+  @Input() categories: ICategory[];
   success = false;
 
-  productcategoryid = 1;
-  producttagids = [1, 2];
-  childproductids = [19, 20, 21, 22, 22];
+  productCategoryId = 2;
+  productTagIds = [1, 2];
+  childProductIds = [ {
+    childProductId: 19,
+    IsDefault: true
+  },
+  {
+    childProductId: 20,
+    IsDefault: false
+  }];
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +41,8 @@ export class EditProductFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.product,this.product.productCategory);
+    console.log(this.categories);
 
   }
 
@@ -52,9 +62,17 @@ export class EditProductFormComponent implements OnInit {
         ...this.product,
         ...product,
         price: +product.price,
-        productcategoryid: 1,
-        producttagids: [1, 2],
-        childproductids: [19, 20, 21, 22, 22],
+        productCategoryId: 1,
+        productTagIds: [1, 2],
+        childProductIds: [ 
+          {
+            childProductId: 19,
+            IsDefault: true
+          },
+          {
+            childProductId: 20,
+            IsDefault: false
+          }],
         discriminator: "Product",
       };
       //console.log(product, product.price);
@@ -63,6 +81,7 @@ export class EditProductFormComponent implements OnInit {
         .subscribe((response: any) => {
           this.router.navigate([`/admin/edit/${+this.route.snapshot.paramMap.get('id')}`]);
           // alert(`${response.name} updated!`);
+          console.log(response);
           this.success = true;
         });
     } else {

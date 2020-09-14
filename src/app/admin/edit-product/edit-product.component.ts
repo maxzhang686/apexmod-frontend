@@ -8,6 +8,7 @@ import {ProductFormValues, IProduct} from '../../shared/models/products';
 
 import { IPlatform } from 'src/app/shared/models/platform';
 import { IGraphic } from 'src/app/shared/models/productGraphic';
+import { ICategory } from 'src/app/shared/models/category';
 import {forkJoin} from 'rxjs';
 @Component({
   selector: 'app-edit-product',
@@ -23,6 +24,7 @@ export class EditProductComponent implements OnInit {
   
   // platforms: IPlatform[];
   // graphics: IGraphic[];
+  categories: ICategory[];
   success = false;
   edit = true;
 
@@ -55,8 +57,11 @@ export class EditProductComponent implements OnInit {
   ngOnInit() {
     // const platForms = this.getPlatforms();
     // const graphics = this.getGraphics();
-    forkJoin().subscribe(results => {
-      // this.graphics = results[0];
+    const categories = this.getCategories();
+ 
+    forkJoin([categories]).subscribe(results => {
+      this.categories = results[0];
+      //console.log(this.categories)
       // this.platforms = results[1];
     }, error => {
       console.log(error);
@@ -79,10 +84,11 @@ export class EditProductComponent implements OnInit {
     this.shopService.getProduct(+this.route.snapshot.paramMap.get('id')).subscribe((response: any) => {
       // const productPlatformId = this.platforms && this.platforms.find(x => x.name === response.productPlatform).id;
       // const productGraphicId = this.graphics && this.graphics.find(x => x.name === response.productGraphic).id;
+      const productCategoryId = this.categories && this.categories.find(x => x.name === response.productCategory).id;
       this.product = response;
-      console.log("product detail:" , this.product)
-      this.productFormValues = {...response};
-      console.log(1, this.productFormValues);
+      console.log("Load product response" , this.product)
+      this.productFormValues = {...response, productCategoryId};
+      // console.log("Load product Form", this.productFormValues);
       
     });
   }
@@ -94,5 +100,8 @@ export class EditProductComponent implements OnInit {
   // getGraphics() {
   //   return this.shopService.getGraphics();
   // }
+  getCategories() {
+    return this.shopService.getCategories();
+  }
 
 }

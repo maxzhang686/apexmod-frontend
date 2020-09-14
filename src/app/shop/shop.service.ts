@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IPagination, Pagination } from '../shared/models/pagination';
 // import { IBrand } from '../shared/models/brand';
-import { IPlatform } from '../shared/models/platform';
+// import { IPlatform } from '../shared/models/platform';
 
 // import { IType } from '../shared/models/productType';
-import { IGraphic } from '../shared/models/productGraphic';
+// import { IGraphic } from '../shared/models/productGraphic';
+
+import { ICategory } from '../shared/models/category';
 import { map, delay } from 'rxjs/operators';
 import { ShopParams } from '../shared/models/shopParams';
 import { IProduct } from '../shared/models/products';
@@ -20,10 +22,14 @@ export class ShopService {
   
   products: IProduct[] = [];
   // brands: IBrand[] = [];
-  platforms: IPlatform[] = [];
+  // platforms: IPlatform[] = [];
 
   // types: IType[] = [];
-  graphics: IGraphic[] = [];
+  // graphics: IGraphic[] = [];
+  categories: ICategory[] = [];
+  
+
+
   pagination = new Pagination();
   shopParams = new ShopParams();
 
@@ -110,29 +116,43 @@ export class ShopService {
   //   );
   // }
 
-  getPlatforms() {
-    if (this.platforms.length > 0) {
-      return of(this.platforms);
+  // getPlatforms() {
+  //   if (this.platforms.length > 0) {
+  //     return of(this.platforms);
+  //   }
+  //   return this.http.get<IPlatform[]>(this.baseUrl + 'products/platforms').pipe(
+  //     map(response => {
+  //       this.platforms = response;
+  //       return response;
+  //     })
+  //   );
+  // }
+
+  // getGraphics() {
+  //   if (this.graphics.length > 0) {
+  //     return of(this.graphics);
+  //   }
+  //   return this.http.get<IGraphic[]>(this.baseUrl + 'products/graphics').pipe(
+  //     map(response => {
+  //       this.graphics = response;
+  //       return response;
+  //     })
+  //   );
+  // }
+
+  getCategories() {
+    if (this.categories.length > 0) {
+      return of(this.categories);
     }
-    return this.http.get<IPlatform[]>(this.baseUrl + 'products/platforms').pipe(
+    return this.http.get<ICategory[]>(this.baseUrl + 'products/categories').pipe(
       map(response => {
-        this.platforms = response;
+        this.categories = response;
         return response;
       })
     );
   }
 
-  getGraphics() {
-    if (this.graphics.length > 0) {
-      return of(this.graphics);
-    }
-    return this.http.get<IGraphic[]>(this.baseUrl + 'products/graphics').pipe(
-      map(response => {
-        this.graphics = response;
-        return response;
-      })
-    );
-  }
+
 
   // getTypes() {
   //   if (this.types.length > 0) {

@@ -69,8 +69,8 @@ export class BasketService {
     return this.basketSource.value;
   }
 
-  addItemToBasket(item: IProduct, quantity = 1,childProducts:[]) {
-    const itemToAdd: IBasketItem = this.mapProductItemToBasketItem(item, quantity,childProducts);
+  addItemToBasket(item: IProduct, quantity = 1, childProducts:[]) {
+    const itemToAdd: IBasketItem = this.mapProductItemToBasketItem(item, quantity, childProducts);
     let basket = this.getCurrentBasketValue();
     if (basket === null) {
       basket = this.createBasket();
