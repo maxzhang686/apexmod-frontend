@@ -2,7 +2,7 @@
     <div class="row">
 
         <section class="col-3">
-            <ng-container *ngIf="graphics && platforms">
+            <ng-container *ngIf="tags">
             <h5 class="text-warning ml-3 mt-4 mb-3">Sort</h5>
             <select class="custom-select mb-4" (change)="onSortSelected($event.target.value)">
                 <option *ngFor="let sort of sortOptions" 
@@ -12,19 +12,19 @@
                 </option>
             </select>
 
-            <h5 class="text-warning ml-3">Platforms</h5>
+            <!-- <h5 class="text-warning ml-3">Platforms</h5>
             <ul class="list-group my-3">
                 <li class="list-group-item" style="cursor: pointer" *ngFor="let platform of platforms"
                     [class.active]="platform.id === this.shopParams.platformId" [value]="platform.id"
                     (click)="onPlatformSelected(platform.id)">
                     {{platform.name}}
                 </li>
-            </ul>
-            <h5 class="text-warning ml-3">Graphics</h5>
+            </ul> -->
+            <h5 class="text-warning ml-3">Filters</h5>
             <ul class="list-group my-3">
-                <li class="list-group-item" style="cursor: pointer" *ngFor="let graphic of graphics" [class.active]="graphic.id === this.shopParams.graphicId"
-                    [value]="graphic.id" (click)="onGraphicSelected(graphic.id)">
-                    {{graphic.name}}
+                <li class="list-group-item" style="cursor: pointer" *ngFor="let tag of tags" [class.active]="tag.id === this.shopParams.producttagid"
+                    [value]="tag.id" (click)="onTagSelected(tag.id)">
+                    {{tag.name}}
                 </li>
             </ul>
         </ng-container>

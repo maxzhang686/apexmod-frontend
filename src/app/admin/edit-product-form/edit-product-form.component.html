@@ -59,7 +59,7 @@
     </div>
   </div>
 
-  <div *ngIf="edit" class="form-row">
+  <div class="form-row">
     <div class="form-group col-md-12">
       <label for="description">Description</label>
       <textarea
@@ -133,26 +133,61 @@
         [(ngModel)]="product.isPublished"
         required
       >
-        <option [selected]="product.isPublished === true" value="true">True</option>
-        <option >False</option>
+        <option [selected]="product.isPublished === true" value={{true}}>True</option>
+        <option [selected]="product.isPublished === false" value={{false}}>False</option>
       </select>
     </div>
+
     <div class="form-group col-md-6">
       <label for="type">Category</label>
-      <select id="type" class="form-control" name="productGraphicId" [(ngModel)]="product.productCategory" required>
-
+      <select id="type" class="form-control" name="productCategoryId" [(ngModel)]="product.productCategoryId" required>
         <option
           *ngFor="let category of categories"
-          [selected]="product.productCategory === category.name"
+          [selected]="product.productCategoryId === category.id"
           [ngValue]="category.id"
           >{{ category.name }}</option
         >
-
       </select>
     </div>
   </div>
 
 
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="tag" >Tags：</label>
+      <div class="form-check" *ngFor="let tag of tags">
+          
+        <input
+          class="form-check-input"
+          type="checkbox"
+          name="{{ tag.name }}"
+          id="{{ tag.id }}"
+          value="{{ tag.id }}" 
+          [checked]="product.productTagIds.includes(tag.id)"
+          (click)="handleChange(tag.id)"
+        />
+        <label class="form-check-label" for="exampleRadios1">
+          {{ tag.name }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!edit" class="form-row">
+    <div class="form-group col-md-6">
+      <label for="discriminator" class="text-danger">此产品为：</label>
+      <select
+        id="discriminator"
+        class="form-control is-invalid"
+        name="discriminator"
+        [(ngModel)]="product.discriminator"
+        required
+      >
+        <option value="Product">整机</option>
+        <option value="ChildProduct">单品</option>
+      </select>
+    </div>
+  </div>
   
 
   <div class="float-right">

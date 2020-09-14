@@ -8,18 +8,19 @@ import { IPagination, Pagination } from '../shared/models/pagination';
 // import { IGraphic } from '../shared/models/productGraphic';
 
 import { ICategory } from '../shared/models/category';
+import { ITag } from '../shared/models/tag';
 import { map, delay } from 'rxjs/operators';
 import { ShopParams } from '../shared/models/shopParams';
 import { IProduct } from '../shared/models/products';
 import { of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ShopService {
   // baseUrl = 'https://localhost:5001/api/';
   baseUrl = 'http://104.210.85.29/api/';
-  
+
   products: IProduct[] = [];
   // brands: IBrand[] = [];
   // platforms: IPlatform[] = [];
@@ -27,13 +28,12 @@ export class ShopService {
   // types: IType[] = [];
   // graphics: IGraphic[] = [];
   categories: ICategory[] = [];
-  
-
+  tags: ITag[] = [];
 
   pagination = new Pagination();
   shopParams = new ShopParams();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getProducts(useCache: boolean) {
     if (useCache === false) {
@@ -41,12 +41,15 @@ export class ShopService {
     }
 
     if (this.products.length > 0 && useCache === true) {
-      const pagesReceived = Math.ceil(this.products.length / this.shopParams.pageSize);
+      const pagesReceived = Math.ceil(
+        this.products.length / this.shopParams.pageSize
+      );
 
       if (this.shopParams.pageNumber <= pagesReceived) {
-        this.pagination.data =
-          this.products.slice((this.shopParams.pageNumber - 1) * this.shopParams.pageSize,
-            this.shopParams.pageNumber * this.shopParams.pageSize);
+        this.pagination.data = this.products.slice(
+          (this.shopParams.pageNumber - 1) * this.shopParams.pageSize,
+          this.shopParams.pageNumber * this.shopParams.pageSize
+        );
 
         return of(this.pagination);
       }
@@ -57,15 +60,21 @@ export class ShopService {
     // if (this.shopParams.brandId !== 0) {
     //   params = params.append('brandId', this.shopParams.brandId.toString());
     // }
-    if (this.shopParams.platformId !== 0) {
-      params = params.append('platformId', this.shopParams.platformId.toString());
-    }
+    // if (this.shopParams.platformId !== 0) {
+    //   params = params.append('platformId', this.shopParams.platformId.toString());
+    // }
 
     // if (this.shopParams.typeId !== 0) {
     //   params = params.append('typeId', this.shopParams.typeId.toString());
     // }
-    if (this.shopParams.graphicId !== 0) {
-      params = params.append('graphicId', this.shopParams.graphicId.toString());
+    // if (this.shopParams.graphicId !== 0) {
+    //   params = params.append('graphicId', this.shopParams.graphicId.toString());
+    // }
+    if (this.shopParams.producttagid !== 0) {
+      params = params.append(
+        'producttagid',
+        this.shopParams.producttagid.toString()
+      );
     }
 
     if (this.shopParams.search) {
@@ -76,9 +85,13 @@ export class ShopService {
     params = params.append('pageIndex', this.shopParams.pageNumber.toString());
     params = params.append('pageSize', this.shopParams.pageSize.toString());
 
-    return this.http.get<IPagination>(this.baseUrl + 'products', { observe: 'response', params })
+    return this.http
+      .get<IPagination>(this.baseUrl + 'products', {
+        observe: 'response',
+        params,
+      })
       .pipe(
-        map(response => {
+        map((response) => {
           this.products = [...this.products, ...response.body.data];
           this.pagination = response.body;
           return this.pagination;
@@ -95,12 +108,11 @@ export class ShopService {
   }
 
   getProduct(id: number) {
-   // const product = this.products.find(p => p.id === id);
+    // const product = this.products.find(p => p.id === id);
 
     // if (product) {
     //   return of(product);
     // }
-
     return this.http.get<IProduct>(this.baseUrl + 'products/' + id);
   }
 
@@ -144,25 +156,25 @@ export class ShopService {
     if (this.categories.length > 0) {
       return of(this.categories);
     }
-    return this.http.get<ICategory[]>(this.baseUrl + 'products/categories').pipe(
-      map(response => {
-        this.categories = response;
+    return this.http
+      .get<ICategory[]>(this.baseUrl + 'products/categories')
+      .pipe(
+        map((response) => {
+          this.categories = response;
+          return response;
+        })
+      );
+  }
+
+  getTags() {
+    if (this.tags.length > 0) {
+      return of(this.tags);
+    }
+    return this.http.get<ITag[]>(this.baseUrl + 'products/tags').pipe(
+      map((response) => {
+        this.tags = response;
         return response;
       })
     );
   }
-
-
-
-  // getTypes() {
-  //   if (this.types.length > 0) {
-  //     return of(this.types);
-  //   }
-  //   return this.http.get<IType[]>(this.baseUrl + 'products/types').pipe(
-  //     map(response => {
-  //       this.types = response;
-  //       return response;
-  //     })
-  //   );
-  // }
 }

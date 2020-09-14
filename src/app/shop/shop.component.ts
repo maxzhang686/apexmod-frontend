@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { IProduct } from '../shared/models/products';
 import { ShopService } from './shop.service';
 // import { IBrand } from '../shared/models/brand';
+// import { IType } from '../shared/models/productType';
 import { IPlatform } from '../shared/models/platform';
 import { IGraphic } from '../shared/models/productGraphic';
-// import { IType } from '../shared/models/productType';
+import { ITag } from '../shared/models/tag';
 import { ShopParams } from '../shared/models/shopParams';
 
 @Component({
@@ -16,8 +17,9 @@ export class ShopComponent implements OnInit {
   @ViewChild('search') searchTerm: ElementRef;
   products: IProduct[];
   // brands: IBrand[];
-  platforms: IPlatform[];
-  graphics: IGraphic[];
+  // platforms: IPlatform[];
+  // graphics: IGraphic[];
+  tags: ITag[];
   shopParams: ShopParams;
   totalCount: number;
   sortOptions = [
@@ -36,6 +38,7 @@ export class ShopComponent implements OnInit {
     // this.getTypes();
     // this.getPlatforms();
     // this.getGraphics();
+    this.getTags();
   }
 
   getProducts(useCache = false) {
@@ -47,13 +50,13 @@ export class ShopComponent implements OnInit {
     });
   }
 
-  // getBrands() {
-  //   this.shopService.getBrands().subscribe(response => {
-  //     this.brands = [{ id: 0, name: 'All' }, ...response];
-  //   }, error => {
-  //     console.log(error);
-  //   });
-  // }
+  getTags() {
+    this.shopService.getTags().subscribe(response => {
+      this.tags = [{ id: 0, name: 'All' }, ...response];
+    }, error => {
+      console.log(error);
+    });
+  }
 
 
   // getTypes() {
@@ -89,23 +92,23 @@ export class ShopComponent implements OnInit {
   //   this.getProducts();
   // }
 
-  onPlatformSelected(platformId: number) {
-    const params = this.shopService.getShopParams();
-    params.platformId = platformId;
-    params.pageNumber = 1;
-    this.shopService.setShopParams(params);
-    this.getProducts();
-  }
+  // onPlatformSelected(platformId: number) {
+  //   const params = this.shopService.getShopParams();
+  //   params.platformId = platformId;
+  //   params.pageNumber = 1;
+  //   this.shopService.setShopParams(params);
+  //   this.getProducts();
+  // }
 
 
 
-  onGraphicSelected(graphicId: number) {
-    const params = this.shopService.getShopParams();
-    params.graphicId = graphicId;
-    params.pageNumber = 1;
-    this.shopService.setShopParams(params);
-    this.getProducts();
-  }
+  // onGraphicSelected(graphicId: number) {
+  //   const params = this.shopService.getShopParams();
+  //   params.graphicId = graphicId;
+  //   params.pageNumber = 1;
+  //   this.shopService.setShopParams(params);
+  //   this.getProducts();
+  // }
 
   // onTypeSelected(typeId: number) {
   //   const params = this.shopService.getShopParams();
@@ -114,6 +117,13 @@ export class ShopComponent implements OnInit {
   //   this.shopService.setShopParams(params);
   //   this.getProducts();
   // }
+    onTagSelected(tagId: number) {
+    const params = this.shopService.getShopParams();
+    params.producttagid = tagId;
+    params.pageNumber = 1;
+    this.shopService.setShopParams(params);
+    this.getProducts();
+  }
 
   onSortSelected(sort: string) {
     const params = this.shopService.getShopParams();
