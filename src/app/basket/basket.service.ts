@@ -156,8 +156,10 @@ export class BasketService {
       itemToAdd.quantity = quantity;
       items.push(itemToAdd);
     } else if(itemToAdd.productCategory === "pc"){
-      itemToAdd.quantity = quantity;
-      items.push(itemToAdd);
+
+
+      itemToAdd.quantity = quantity + items[index].quantity;
+      items[index] = itemToAdd;
     }
     else {
       items[index].quantity += quantity;
