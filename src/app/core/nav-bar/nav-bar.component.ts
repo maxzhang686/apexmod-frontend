@@ -16,6 +16,7 @@ export class NavBarComponent implements OnInit {
   currentUser$: Observable<IUser>
   isAdmin$: Observable<boolean>;
   quantity$: Observable<IBasketQuantity>;
+  isCollapsed = true;
 
   constructor(private basketService: BasketService, private accountService: AccountService) { }
 

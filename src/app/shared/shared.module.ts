@@ -20,6 +20,8 @@ import {ImageCropperModule} from 'ngx-image-cropper';
 import {NgxDropzoneModule} from 'ngx-dropzone';
 import { EditorModule,TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { DatatableComponent } from './components/datatable/datatable.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 
 @NgModule({
@@ -36,9 +38,11 @@ import { DatatableComponent } from './components/datatable/datatable.component';
     CurrencyMaskModule,
     NgxGalleryModule,
     TabsModule.forRoot(),
+    CollapseModule.forRoot(),
     NgxDropzoneModule,
     ImageCropperModule,
-    EditorModule
+    EditorModule,
+    NgxDatatableModule
   ],
   exports: [
     PaginationModule,
@@ -59,7 +63,10 @@ import { DatatableComponent } from './components/datatable/datatable.component';
     NgxDropzoneModule,
     ImageCropperModule,
     PhotoWidgetComponent,
-    EditorModule
+    EditorModule,
+    DatatableComponent,
+    NgxDatatableModule,
+    CollapseModule
   ],
   providers: [
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
