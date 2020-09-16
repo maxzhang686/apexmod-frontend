@@ -34,12 +34,26 @@ export class BasketService {
   }
 
   setShippingPrice(deliveryMethod: IDeliveryMethod) {
-    this.shipping = deliveryMethod.price;
-    const basket = this.getCurrentBasketValue();
-    basket.deliveryMethodId = deliveryMethod.id;
-    basket.shippingPrice = deliveryMethod.price;
-    this.calculateTotals();
-    this.setBasket(basket);
+    // console.log(deliveryMethod.id)
+    if(deliveryMethod.id === 4){
+      this.shipping = deliveryMethod.price;
+      const basket = this.getCurrentBasketValue();
+      basket.deliveryMethodId = deliveryMethod.id;
+      basket.shippingPrice = deliveryMethod.price;
+      // this.calculateTotalWithDeposit();
+      this.calculateTotals();
+      this.setBasket(basket);
+    }else{
+      this.shipping = deliveryMethod.price;
+      const basket = this.getCurrentBasketValue();
+      basket.deliveryMethodId = deliveryMethod.id;
+      basket.shippingPrice = deliveryMethod.price;
+      this.calculateTotals();
+      this.setBasket(basket);
+    }
+
+
+
   }
 
   getBasket(id: string) {
@@ -135,10 +149,24 @@ export class BasketService {
     const basket = this.getCurrentBasketValue();
     const shipping = this.shipping;
     const subtotal = basket.items.reduce((prevValue, item) => (item.price * item.quantity) + prevValue, 0);
+    let total = 0;
+    if(shipping == 20){
+      total = shipping ;
+    }else{
+      total = subtotal + shipping;
+    }
     
-    const total = subtotal + shipping;
     this.basketTotalSource.next({shipping, total, subtotal});
   }
+
+  // private calculateTotalWithDeposit() {
+  //   const basket = this.getCurrentBasketValue();
+  //   const shipping = this.shipping;
+  //   const subtotal = basket.items.reduce((prevValue, item) => (item.price * item.quantity) + prevValue, 0);
+  //   const total = 50;
+  //   console.log(shipping, total, subtotal)
+  //   this.basketTotalSource.next({shipping, total, subtotal});
+  // }
 
   private calculateItemsQuantity(){
     const basket = this.getCurrentBasketValue();

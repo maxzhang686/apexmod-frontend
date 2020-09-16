@@ -11,9 +11,10 @@ import { EditProductComponentComponent } from './edit-product-component/edit-pro
 import { EditComponentComponent } from './edit-component/edit-component.component';
 import { EditComponentFormComponent } from './edit-component-form/edit-component-form.component';
 import { EditComponentPhotoComponent } from './edit-component-photo/edit-component-photo.component';
+import { TinyEditorComponent } from './tiny-editor/tiny-editor.component';
 
 @NgModule({
-  declarations: [AdminComponent, EditProductComponent, EditProductFormComponent, EditProductPhotosComponent, EditProductComponentComponent, EditComponentComponent, EditComponentFormComponent, EditComponentPhotoComponent],
+  declarations: [AdminComponent, EditProductComponent, EditProductFormComponent, EditProductPhotosComponent, EditProductComponentComponent, EditComponentComponent, EditComponentFormComponent, EditComponentPhotoComponent,  TinyEditorComponent],
   imports: [
     CommonModule,
     SharedModule,

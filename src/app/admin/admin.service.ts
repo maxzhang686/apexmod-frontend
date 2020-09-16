@@ -57,10 +57,24 @@ export class AdminService {
 
   uploadComponentImage(file: File, id: number) {
     const formData = new FormData();
-    formData.append('photo', file, 'image.png');
+    formData.append('Photo', file, 'image.png');
     return this.http.put(this.baseUrl + 'productcomponent/' + id + '/componentphoto', formData, {
       reportProgress: true,
       observe: 'events'
+    });
+  }
+
+  uploadRichImage(file: File) {
+    const formData = new FormData();
+    formData.append('Photo', file, 'image.png');
+    return this.http.post(this.baseUrl + 'products/richtextphoto', formData, {
+      reportProgress: true,
+      observe: 'events'
+    });
+  }
+  uploadRichImages(formData) {
+    return this.http.post(this.baseUrl + 'products/richtextphoto', formData, {
+      responseType: 'text'
     });
   }
 

@@ -25,7 +25,7 @@ export interface IProductToCreate {
   pictureUrl: string;
   productCategoryId: number;
   productTagIds :number[];
-  childProductIds : IChildProduct[];
+  selectedChildProducts : IChildProduct[];
   isPublished: boolean;
   discriminator:string;
   // productTypeId: number;
@@ -41,7 +41,8 @@ export class ProductFormValues implements IProductToCreate {
   pictureUrl = '';
   productCategoryId:number;
   productTagIds :number[]=[];
-  childProductIds:IChildProduct[];
+  // childProductIds:IChildProduct[];
+  selectedChildProducts:IChildProduct[];
   isPublished = false;
   childProducts='';
   productCategory ='';

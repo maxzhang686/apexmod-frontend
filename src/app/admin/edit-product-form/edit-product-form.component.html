@@ -59,7 +59,7 @@
     </div>
   </div>
 
-  <div class="form-row">
+  <!-- <div class="form-row">
     <div class="form-group col-md-12">
       <label for="description">Description</label>
       <textarea
@@ -84,10 +84,10 @@
         <div *ngIf="description.errors.required">Description is required</div>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="form-row">
-    <!-- <div class="form-group col-md-6">
+  <!-- <div class="form-row">
+    <div class="form-group col-md-6">
       <label for="brand">PlatForm</label>
       <select
         id="brand"
@@ -120,8 +120,8 @@
           >{{ graphic.name }}</option
         >
       </select>
-    </div> -->
-  </div>
+    </div>
+  </div> -->
 
   <div class="form-row">
     <div class="form-group col-md-6">
@@ -133,36 +133,45 @@
         [(ngModel)]="product.isPublished"
         required
       >
-        <option [selected]="product.isPublished === true" value={{true}}>True</option>
-        <option [selected]="product.isPublished === false" value={{false}}>False</option>
+        <option [selected]="product.isPublished === true" value="{{ true }}">
+          True
+        </option>
+        <option [selected]="product.isPublished === false" value="{{ false }}">
+          False
+        </option>
       </select>
     </div>
 
     <div class="form-group col-md-6">
       <label for="type">Category</label>
-      <select id="type" class="form-control" name="productCategoryId" [(ngModel)]="product.productCategoryId" required>
+      <select
+        id="type"
+        class="form-control"
+        name="productCategoryId"
+        [(ngModel)]="product.productCategoryId"
+        required
+      >
         <option
           *ngFor="let category of categories"
           [selected]="product.productCategoryId === category.id"
           [ngValue]="category.id"
-          >{{ category.name }}</option
         >
+          {{ category.name }}
+        </option>
       </select>
     </div>
   </div>
 
-
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="tag" >Tags：</label>
+      <label for="tag">Tags：</label>
       <div class="form-check" *ngFor="let tag of tags">
-          
         <input
           class="form-check-input"
           type="checkbox"
           name="{{ tag.name }}"
           id="{{ tag.id }}"
-          value="{{ tag.id }}" 
+          value="{{ tag.id }}"
           [checked]="product.productTagIds.includes(tag.id)"
           (click)="handleChange(tag.id)"
         />
@@ -170,6 +179,47 @@
           {{ tag.name }}
         </label>
       </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <label for="description">Description</label>
+      <textarea
+        [ngClass]="{
+          'is-invalid':
+            description.invalid && (description.dirty || description.touched)
+        }"
+        required
+        #description="ngModel"
+        class="form-control"
+        id="description"
+        [(ngModel)]="product.description"
+        name="description"
+        rows="3"
+      ></textarea>
+      <div
+        *ngIf="
+          description.invalid && (description.dirty || description.touched)
+        "
+        class="invalid-feedback"
+      >
+        <div *ngIf="description.errors.required">Description is required</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <label for="discriminator" class="text-danger">Description</label>
+      <editor
+        id=editorId
+        initialValue="{{ product.description }}"
+        [init]="editorConfig" 
+        [(ngModel)]="product.description"
+        [ngModelOptions]="{standalone: true}"
+      >
+      </editor>
     </div>
   </div>
 
@@ -188,7 +238,6 @@
       </select>
     </div>
   </div>
-  
 
   <div class="float-right">
     <button

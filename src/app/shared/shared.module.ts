@@ -18,10 +18,12 @@ import {NgxGalleryModule} from '@kolkov/ngx-gallery';
 import { PhotoWidgetComponent } from './components/photo-widget/photo-widget.component';
 import {ImageCropperModule} from 'ngx-image-cropper';
 import {NgxDropzoneModule} from 'ngx-dropzone';
+import { EditorModule,TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { DatatableComponent } from './components/datatable/datatable.component';
 
 
 @NgModule({
-  declarations: [PagingHeaderComponent, PagerComponent, OrderTotalsComponent, TextInputComponent, StepperComponent, BasketSummaryComponent, PhotoWidgetComponent],
+  declarations: [PagingHeaderComponent, PagerComponent, OrderTotalsComponent, TextInputComponent, StepperComponent, BasketSummaryComponent, PhotoWidgetComponent, DatatableComponent],
   imports: [
     CommonModule,
     PaginationModule.forRoot(),
@@ -35,7 +37,8 @@ import {NgxDropzoneModule} from 'ngx-dropzone';
     NgxGalleryModule,
     TabsModule.forRoot(),
     NgxDropzoneModule,
-    ImageCropperModule
+    ImageCropperModule,
+    EditorModule
   ],
   exports: [
     PaginationModule,
@@ -55,7 +58,11 @@ import {NgxDropzoneModule} from 'ngx-dropzone';
     TabsModule,
     NgxDropzoneModule,
     ImageCropperModule,
-    PhotoWidgetComponent
+    PhotoWidgetComponent,
+    EditorModule
+  ],
+  providers: [
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
 })
 export class SharedModule {}

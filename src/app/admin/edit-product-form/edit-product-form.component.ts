@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { IProduct, ProductFormValues } from '../../shared/models/products';
 // import {IBrand} from '../../shared/models/brand';
 // import {IType} from '../../shared/models/productType';
@@ -9,12 +9,13 @@ import { ITag } from 'src/app/shared/models/tag';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from '../admin.service';
 
+// declare var tinymce: any;
 @Component({
   selector: 'app-edit-product-form',
   templateUrl: './edit-product-form.component.html',
   styleUrls: ['./edit-product-form.component.scss'],
 })
-export class EditProductFormComponent implements OnInit {
+export class EditProductFormComponent implements OnInit, AfterViewInit {
   @Input() product: ProductFormValues;
   @Input() edit: boolean;
   // @Input() brands: IBrand[];
@@ -24,10 +25,9 @@ export class EditProductFormComponent implements OnInit {
   @Input() tags: ITag[];
 
   success = false;
+  editorConfig;
 
-  // productCategoryId = 2;
-  //productTagIds: number[];
-  childProductIds = [
+  selectedChildProducts = [
     {
       childProductId: 19,
       IsDefault: true,
@@ -38,6 +38,7 @@ export class EditProductFormComponent implements OnInit {
     },
   ];
 
+
   constructor(
     private route: ActivatedRoute,
     private adminService: AdminService,
@@ -47,16 +48,48 @@ export class EditProductFormComponent implements OnInit {
   ngOnInit(): void {
     // console.log(this.product, this.product.productCategory);
     // console.log(this.categories);
+    let self = this;
+    this.editorConfig = {
+      base_url: '/tinymce', // Root for resources
+      suffix: '.min',
+      height: 500,
+      plugins: [
+        'image imagetools paste media',
+        'advlist autolink lists link charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table paste code help wordcount',
+      ],
+      toolbar: ' undo redo | formatselect | bold italic | image|',
+      images_upload_handler: function (blobInfo, success, failure) {
+        var formData;
+        formData = new FormData();
+
+        formData.append("Photo", blobInfo.blob(), blobInfo.filename());
+
+        const file = blobInfo.blob();
+        self.adminService.uploadRichImages(formData).subscribe((response) => {
+          console.log(response);
+          let url = 'http://104.210.85.29/Content/'+response;
+          success(url);
+        });
+        
+      },
+    };
+
+
   }
 
-  handleChange(id){
+  ngAfterViewInit() {
+  }
+
+  handleChange(id) {
     //console.log(id);
     const checkCurrentTagId = this.product.productTagIds.includes(id);
 
     if (checkCurrentTagId === false) {
-      this.product.productTagIds.push(id)
+      this.product.productTagIds.push(id);
     } else {
-      this.product.productTagIds.splice(id, 1)
+      this.product.productTagIds.splice(id, 1);
     }
     //console.log(this.product.productTagIds);
   }
@@ -70,25 +103,40 @@ export class EditProductFormComponent implements OnInit {
   onSubmit(product: ProductFormValues) {
     this.deleteSomeObjectKey();
     if (this.route.snapshot.url[0].path === 'edit') {
-      console.log("submit: ", this.product);
+      console.log('submit: ', this.product);
       const updatedProduct = {
         ...this.product,
         ...product,
         price: +product.price,
         // productTagIds: [1, 2],
-        childProductIds: [
-          {
-            childProductId: 19,
-            IsDefault: true,
-          },
-          {
-            childProductId: 20,
-            IsDefault: false,
-          },
-        ],
-        discriminator: 'ChildProduct',
+        // selectedChildProducts: [
+        //   {
+        //     childProductId: 65,
+        //     IsDefault: true
+        //   },
+        //   {
+        //     childProductId: 66,
+        //     IsDefault: false
+        //   },
+        //    {
+        //     childProductId: 67,
+        //     IsDefault: true
+        //   },
+        //   {
+        //     childProductId: 68,
+        //     IsDefault: false
+        //   },
+        //    {
+        //     childProductId: 69,
+        //     IsDefault: true
+        //   },
+        //   {
+        //     childProductId: 70,
+        //     IsDefault: false
+        //   }
+        // ],
       };
-      console.log(updatedProduct);
+      console.log('update',updatedProduct);
       this.adminService
         .updateProduct(updatedProduct, +this.route.snapshot.paramMap.get('id'))
         .subscribe((response: any) => {

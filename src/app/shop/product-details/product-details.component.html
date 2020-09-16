@@ -39,7 +39,8 @@
     <div class="row mt-5">
       <div class="col12 ml-3">
         <h4>Description</h4>
-        <p>{{ product.description }}</p>
+        <!-- <div>{{ product.description }}</div> -->
+        <div [innerHTML]="product.description"></div>
       </div>
     </div>
 
@@ -51,11 +52,11 @@
           <input
             class="form-check-input"
             type="radio"
-            name="{{ item.category }}"
+            name="{{ item.productCategory }}"
             id="{{ item.id }}"
             value="{{ item.id }}" 
-            [checked]="item.default"
-            (click)="handleChange(item.category,item.id, item.price)"
+            [checked]="item.isDefault"
+            (click)="handleChange(item.productCategory,item.id, item.price)"
           />
           <label class="form-check-label" for="exampleRadios1">
             {{ item.name }}
