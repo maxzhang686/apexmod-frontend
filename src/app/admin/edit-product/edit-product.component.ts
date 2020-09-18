@@ -27,6 +27,7 @@ export class EditProductComponent implements OnInit {
   tags: ITag[];
   success = false;
   edit = true;
+  aChildProducts =[]
 
   constructor(
     private adminService: AdminService,
@@ -98,6 +99,7 @@ export class EditProductComponent implements OnInit {
           this.categories.find((x) => x.name === response.productCategory).id;
         this.product = response;
         this.productFormValues = { ...response, productCategoryId };
+        this.aChildProducts = this.productFormValues.childProducts
         console.log('Load product Form', this.productFormValues);
         // console.log("Load product response" , this.product)
       });

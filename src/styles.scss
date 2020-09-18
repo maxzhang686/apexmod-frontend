@@ -55,3 +55,15 @@ label.xng-breadcrumb-trail {
   border-top: 1px solid #eee;
   padding: 15px 0;
 }
+
+
+#description--text{
+  width: inherit;
+  & >p{
+    width: inherit !important;
+  } 
+  & img{
+    width: 100% !important;
+    height: auto !important;
+  }
+}

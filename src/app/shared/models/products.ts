@@ -44,7 +44,7 @@ export class ProductFormValues implements IProductToCreate {
   // childProductIds:IChildProduct[];
   selectedChildProducts:IChildProduct[];
   isPublished = false;
-  childProducts='';
+  childProducts=[];
   productCategory ='';
   tags ='';
   discriminator:string;
