@@ -9,7 +9,8 @@
                     [completed]="(checkoutForm.get('deliveryForm')).valid">
                 <app-checkout-delivery [checkoutForm]="checkoutForm"></app-checkout-delivery>
                 </cdk-step>
-                <cdk-step [label]="'Review'">
+                <cdk-step [label]="'Review'" >
+                    <!-- <app-checkout-review [checkoutForm]="checkoutForm" [appStepper]='appStepper'></app-checkout-review> -->
                     <app-checkout-review [appStepper]='appStepper'></app-checkout-review>
                 </cdk-step>
                 <cdk-step [label]="'Payment'">

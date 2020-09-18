@@ -25,6 +25,7 @@ export class BasketService {
   constructor(private http: HttpClient) { }
 
   createPaymentIntent() {
+    // console.log(this.getCurrentBasketValue());
     return this.http.post(this.baseUrl + 'payments/' + this.getCurrentBasketValue().id, {})
       .pipe(
         map((basket: IBasket) => {
@@ -32,6 +33,8 @@ export class BasketService {
         })
       );
   }
+
+  
 
   setShippingPrice(deliveryMethod: IDeliveryMethod) {
     // console.log(deliveryMethod.id)

@@ -38,6 +38,9 @@ export class CheckoutComponent implements OnInit {
       }),
       paymentForm: this.fb.group({
         nameOnCard: [null, Validators.required]
+      }),
+      OrderForm: this.fb.group({
+        orderId: [null, Validators.required]
       })
     });
   }
