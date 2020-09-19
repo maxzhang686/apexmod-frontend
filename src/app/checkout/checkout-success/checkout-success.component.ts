@@ -8,10 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./checkout-success.component.scss']
 })
 export class CheckoutSuccessComponent implements OnInit {
-order:IOrder
+  order:IOrder
 
   constructor(private router: Router) {
     const navigation = this.router.getCurrentNavigation();
+    console.log(navigation);
     const state = navigation && navigation.extras && navigation.extras.state;
     if (state) {
       this.order = state as IOrder;

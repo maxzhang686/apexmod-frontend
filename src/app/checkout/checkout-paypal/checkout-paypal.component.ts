@@ -84,7 +84,7 @@ export class CheckoutPaypalComponent implements OnInit, AfterViewInit {
     //     if (err) {
     //       // Handle any errors that might've occurred when creating Drop-in
     //       console.error(err);
-    //       return;
+    //       return;s
     //     }
     //     this.dropIninstance = dropinInstance;
     //     this.braintreeIsReady = true;

@@ -24,6 +24,7 @@ export class ProductDetailsComponent implements OnInit {
   components: IChildrenComponent[];
   childComponentsId: any;
   childComponentsPrice: any;
+  childComponentsName: any;
   childProducts: any;
   basketProduct: any;
 
@@ -65,11 +66,13 @@ export class ProductDetailsComponent implements OnInit {
     return count;
   }
 
-  handleChange(productCategory, id, price) {
+  handleChange(productCategory, id, price,name) {
     this.childComponentsId[productCategory] = id;
     this.childComponentsPrice[productCategory] = price;
+    this.childComponentsName[productCategory] = name;
     console.log(this.childComponentsId);
     console.log(this.childComponentsPrice);
+    console.log(this.childComponentsName);
     this.setPrice(this.childComponentsPrice);
   }
 
@@ -95,6 +98,18 @@ export class ProductDetailsComponent implements OnInit {
       priceGroup[items.productCategory] = products;
     });
     this.setPrice(priceGroup);
+    return priceGroup;
+  }
+
+  mapChildrenProductsName(arr) {
+    let priceGroup = {};
+    arr.forEach((items, index) => {
+      let products = priceGroup[items.productCategory] || [];
+      if (items.isDefault) {
+        products = items.name;
+      }
+      priceGroup[items.productCategory] = products;
+    });
     return priceGroup;
   }
 
@@ -142,16 +157,28 @@ export class ProductDetailsComponent implements OnInit {
     }
     this.childProducts = output;
   }
+  handlerChangeProductNameObjectToArry() {
+    let input = this.childComponentsName;
+    let output = [];
+    for (var type in input) {
+      let item = {};
+      item[type] = input[type];
+      output.push(item);
+    }
+    this.basketProduct = output;
+  }
 
   addItemToBasket() {
     // console.log(this.product);
     this.handlerChangeChildrenProductsObjectToArry();
-    // console.log(this.childProducts);
+    this.handlerChangeProductNameObjectToArry();
+    console.log(this.basketProduct);
 
     this.basketService.addItemToBasket(
       this.product,
       this.quantity,
-      this.childProducts
+      this.childProducts,
+      // this.basketProduct
     );
   }
 
@@ -171,108 +198,6 @@ export class ProductDetailsComponent implements OnInit {
       .subscribe(
         (product) => {
           this.product = product;
-          // this.product = {
-          //   id: 1,
-          //   name: 'Alienware 3000',
-          //   // title: "This is the best Gaming PC",
-          //   description:
-          //     "The Cooler Master MasterBox Lite 3.1 TG mATX Case is your straightforward option for your PC build that doesn't ignore good looks, customisation, or performance. A sleek DarkMirror front panel and three custom trim colours (included in the box) offer a great first entry point for customisation. Additionally, it comes with a 4mm thick edge to edge Tempered Glass Side Panel to show your internal components. And with support for up to 3 cooling fans and a watercooling system, Cooler Master ensure your performance will not suffer.",
-          //   price: 250,
-          //   pictureUrl: 'http://104.210.85.29/Content/images/products/alienware.png',
-          //   productCategory: 'pc',
-          //   quantity: 0,
-          //   tags: [
-          //     {
-          //       id: 1,
-          //       name: 'AMD',
-          //     },
-          //     {
-          //       id: 2,
-          //       name: 'Intel',
-          //     },
-          //   ],
-          //   childProducts: [
-          //     {
-          //       id: 10,
-          //       name: 'CPU i9 9900k',
-          //       description: 'Intel 1151 9th Gen Processors',
-          //       category: 'cpu',
-          //       price: 866,
-          //       pictureUrl: 'https://i.ibb.co/6sFDDxJ/9700k.jpg',
-          //       isPublished: true,
-          //       default: false,
-          //     },
-          //     {
-          //       id: 18,
-          //       name: 'Case 15',
-          //       description: 'Intel 1151 9th Gen Processors',
-          //       category: 'case',
-          //       price: 180,
-          //       pictureUrl: 'https://i.ibb.co/6sFDDxJ/9700k.jpg',
-          //       isPublished: true,
-          //       default: true,
-          //     },
-          //     {
-          //       id: 6,
-          //       name: 'CPU i7 9700',
-          //       description:
-          //         'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa.',
-          //       category: 'cpu',
-          //       price: 666,
-          //       pictureUrl: 'https://i.ibb.co/6sFDDxJ/9700k.jpg',
-          //       isPublished: true,
-          //       default: true,
-          //     },
-          //     {
-          //       id: 17,
-          //       name: 'Case M15x-R2',
-          //       description:
-          //         'Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.',
-          //       category: 'case',
-          //       price: 150,
-          //       pictureUrl: 'ihttps://i.ibb.co/6sFDDxJ/9700k.jpg',
-          //       isPublished: true,
-          //       default: false,
-          //     },
-          //     {
-          //       id: 99,
-          //       name: '2070 super',
-          //       description: 'Intel 1151 9th Gen Processors',
-          //       category: 'gpu',
-          //       price: 866.0,
-          //       pictureUrl: 'https://i.ibb.co/6sFDDxJ/9700k.jpg',
-          //       isPublished: true,
-          //       default: true,
-          //     },
-          //     {
-          //       id: 88,
-          //       name: '2080 super',
-          //       description: 'Intel 1151 9th Gen Processors',
-          //       category: 'gpu',
-          //       price: 180.0,
-          //       pictureUrl: 'https://i.ibb.co/6sFDDxJ/9700k.jpg',
-          //       isPublished: true,
-          //       default: false,
-          //     },
-          //   ],
-          //   photos: [
-          //     {
-          //       id: 1,
-          //       pictureUrl:
-          //         'http://104.210.85.29/Content/images/products/alienware.png',
-          //       fileName: 'alienware.png',
-          //       isMain: true,
-          //     },
-          //     {
-          //       id: 2,
-          //       pictureUrl:
-          //         'http://104.210.85.29/Content/images/products/c5c4ba6e-86b1-46ca-b6eb-4ebd395b6da6.jpeg',
-          //       fileName: 'alienware.png',
-          //       isMain: true,
-          //     },
-          //   ],
-          //   isPublished: true,
-          // };
           console.log(this.product);
           this.bcService.set('@productDetails', product.name);
           this.initializeGallery();
@@ -287,12 +212,19 @@ export class ProductDetailsComponent implements OnInit {
             const priceGroup = this.mapChildrenProductsPrice(
               this.product.childProducts
             );
+            const nameGroup = this.mapChildrenProductsName(
+              this.product.childProducts
+            );
+
+
             this.components = componentGroup;
             this.childComponentsId = idGroup;
             this.childComponentsPrice = priceGroup;
+            this.childComponentsName = nameGroup;
             console.log('array', this.components);
             console.log('id', this.childComponentsId);
             console.log('price', this.childComponentsPrice);
+            console.log('Name', this.childComponentsName);
 
           }
 

@@ -7,6 +7,10 @@
                 [isOrder]="true"
             >
             </app-basket-summary>
+
+            <button *ngIf="needPay" class="btn btn-primary" (click)='linkToPayPage()'>
+                Pay For the Order.
+            </button>
         </div>
         <div class="col-4">
                 <app-order-totals

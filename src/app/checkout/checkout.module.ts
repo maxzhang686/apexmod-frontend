@@ -9,10 +9,11 @@ import { CheckoutReviewComponent } from './checkout-review/checkout-review.compo
 import { CheckoutPaymentComponent } from './checkout-payment/checkout-payment.component';
 import { CheckoutSuccessComponent } from './checkout-success/checkout-success.component';
 import { CheckoutPaypalComponent } from './checkout-paypal/checkout-paypal.component';
+import { CheckoutPayComponent } from './checkout-pay/checkout-pay.component';
 
 
 @NgModule({
-  declarations: [CheckoutComponent, CheckoutAddressComponent, CheckoutDeliveryComponent, CheckoutReviewComponent, CheckoutPaymentComponent, CheckoutSuccessComponent, CheckoutPaypalComponent],
+  declarations: [CheckoutComponent, CheckoutAddressComponent, CheckoutDeliveryComponent, CheckoutReviewComponent, CheckoutPaymentComponent, CheckoutSuccessComponent, CheckoutPaypalComponent, CheckoutPayComponent],
   imports: [
     CommonModule,
     CheckoutRoutingModule,
