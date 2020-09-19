@@ -175,15 +175,17 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
   handleChangeTagIds(id) {
     //console.log(id);
     const checkCurrentTagId = this.product.productTagIds.includes(id);
-
+    // console.log(this.product.productTagIds);
     if (checkCurrentTagId === false) {
       this.product.productTagIds.push(id);
+      console.log(this.product);
     } else {
-      this.product.productTagIds.splice(id, 1);
+      const index = this.product.productTagIds.findIndex( indexId => indexId === id);
+      this.product.productTagIds.splice(index, 1);
     }
-    //console.log(this.product.productTagIds);
+    console.log(this.product.productTagIds);
   }
-
+ 
   deleteSomeObjectKey() {
     delete this.product.childProducts;
     delete this.product.productCategory;
@@ -217,10 +219,12 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
       const newProduct = {
         ...product,
         price: +product.price,
-        // productTagIds: [1, 2],
+        productTagIds: this.product.productTagIds,
+        description:this.product.description
       };
 
-      console.log(product, product.price);
+      console.log(0, product);
+      console.log(1, newProduct);
       this.adminService.createProduct(newProduct).subscribe((response: any) => {
         this.router.navigate([`/admin/edit/${response}`]);
         // alert(`${response.name} created!`);
