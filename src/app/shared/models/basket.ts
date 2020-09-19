@@ -23,8 +23,10 @@ export interface IBasketItem {
     // type: string;
     // platform: string;
     // graphic: string;
-    childProducts:[]
+    childProducts?:[]
+    basketProducts?:[]
     productCategory:string;
+
 
 }
 

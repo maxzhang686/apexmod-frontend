@@ -86,8 +86,8 @@ export class BasketService {
     return this.basketSource.value;
   }
 
-  addItemToBasket(item: IProduct, quantity = 1, childProducts:[]) {
-    const itemToAdd: IBasketItem = this.mapProductItemToBasketItem(item, quantity, childProducts);
+  addItemToBasket(item: IProduct, quantity = 1, childProducts?:[],basketProduct?:[]) {
+    const itemToAdd: IBasketItem = this.mapProductItemToBasketItem(item, quantity, childProducts,basketProduct);
     let basket = this.getCurrentBasketValue();
     if (basket === null) {
       basket = this.createBasket();
@@ -204,7 +204,7 @@ export class BasketService {
     return basket;
   }
 
-  private mapProductItemToBasketItem(item: IProduct, quantity: number,childProducts:[]): IBasketItem {
+  private mapProductItemToBasketItem(item: IProduct, quantity: number,childProducts?:[],basketProduct?:[]): IBasketItem {
     return {
       id: item.id,
       productName: item.name,
@@ -212,11 +212,12 @@ export class BasketService {
       pictureUrl: item.pictureUrl,
       quantity,
       childProducts: childProducts,
-      productCategory: item.productCategory
+      productCategory: item.productCategory,
+      basketProducts:basketProduct
       // brand: item.productBrand,
       // type: item.productType
       // platform: item.productPlatform,
-      // graphic: item.productGraphic
+      // graphic: item.productGraphic,
     };
   }
 }

@@ -178,7 +178,7 @@ export class ProductDetailsComponent implements OnInit {
       this.product,
       this.quantity,
       this.childProducts,
-      // this.basketProduct
+      this.basketProduct
     );
   }
 
