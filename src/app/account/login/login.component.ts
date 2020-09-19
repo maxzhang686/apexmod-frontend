@@ -4,6 +4,10 @@ import { AccountService } from '../account.service';
 
 import { Router, ActivatedRoute } from '@angular/router';
 
+// export interface FormModel {
+//   captcha?: string;
+// }
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,6 +16,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class LoginComponent implements OnInit {
    loginForm: FormGroup;
    returnUrl: string;
+  //  title = 'recaptchaapp';
+  //  stieKey = "6Lc4Cs4ZAAAAAH4K4HFJ_q_kA99UyGIMT56xK5an"
+  //  recaptcha:any[];
+
+  // public formModel: FormModel = {};
+
 
   constructor(private accountService : AccountService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -20,6 +30,12 @@ export class LoginComponent implements OnInit {
     this.creatLoginFrom();
 
   }
+
+
+//   resolved(captchaResponse: any[]) {
+//     this.recaptcha = captchaResponse;
+//     console.log(this.recaptcha);
+// }
 
   creatLoginFrom() {
     this.loginForm = new FormGroup({
