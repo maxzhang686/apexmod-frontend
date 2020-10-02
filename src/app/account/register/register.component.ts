@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
         [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')],
         [this.validateEmailNotTaken()]
       ],
-      password: [null, [Validators.required]]
+      password: [null, [Validators.required,Validators.pattern(`^(?=.*[a-z])(?=.*[A-Z])((?=.*\\d)|(?=.*[!@#$%^&*()'"]))[A-Za-z\\d!@#$%^&*()'"](?!\\s).{5,21}$`)]]
     });
   }
 
@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
     this.accountService.register(this.registerForm.value).subscribe(response => {
       this.router.navigateByUrl(this.returnUrl);
     }, error => {
-      console.log(error);
+      // console.log(error);
       this.errors = error.errors;
     });
   }

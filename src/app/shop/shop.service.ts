@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IPagination, Pagination } from '../shared/models/pagination';
-// import { IBrand } from '../shared/models/brand';
-// import { IPlatform } from '../shared/models/platform';
-
-// import { IType } from '../shared/models/productType';
-// import { IGraphic } from '../shared/models/productGraphic';
 
 import { ICategory } from '../shared/models/category';
 import { ITag } from '../shared/models/tag';
@@ -20,23 +15,17 @@ import { environment } from 'src/environments/environment';
 })
 export class ShopService {
   // baseUrl = 'https://localhost:5001/api/';
-  // baseUrl = 'http://104.210.85.29/api/';
   baseUrl = environment.apiUrl;
 
-
+  //caching
   products: IProduct[] = [];
-  // brands: IBrand[] = [];
-  // platforms: IPlatform[] = [];
 
-  // types: IType[] = [];
-  // graphics: IGraphic[] = [];
   categories: ICategory[] = [];
   tags: ITag[] = [];
-
   pagination = new Pagination();
   shopParams = new ShopParams();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getProducts(useCache: boolean) {
     if (useCache === false) {
@@ -60,26 +49,12 @@ export class ShopService {
 
     let params = new HttpParams();
 
-    // if (this.shopParams.brandId !== 0) {
-    //   params = params.append('brandId', this.shopParams.brandId.toString());
-    // }
-    // if (this.shopParams.platformId !== 0) {
-    //   params = params.append('platformId', this.shopParams.platformId.toString());
-    // }
-
-    // if (this.shopParams.typeId !== 0) {
-    //   params = params.append('typeId', this.shopParams.typeId.toString());
-    // }
-    // if (this.shopParams.graphicId !== 0) {
-    //   params = params.append('graphicId', this.shopParams.graphicId.toString());
-    // }
     if (this.shopParams.producttagid !== 0) {
       params = params.append(
         'producttagid',
         this.shopParams.producttagid.toString()
       );
     }
-
     if (this.shopParams.search) {
       params = params.append('search', this.shopParams.search);
     }
@@ -102,6 +77,12 @@ export class ShopService {
       );
   }
 
+  getProductsByAdmin() {
+    return this.http.get(this.baseUrl + 'products/admin/products')
+  }
+
+
+
   getShopParams() {
     return this.shopParams;
   }
@@ -111,49 +92,13 @@ export class ShopService {
   }
 
   getProduct(id: number) {
+    //caching, data not match
     // const product = this.products.find(p => p.id === id);
-
     // if (product) {
     //   return of(product);
     // }
     return this.http.get<IProduct>(this.baseUrl + 'products/' + id);
   }
-
-  // getBrands() {
-  //   if (this.brands.length > 0) {
-  //     return of(this.brands);
-  //   }
-  //   return this.http.get<IBrand[]>(this.baseUrl + 'products/brands').pipe(
-  //     map(response => {
-  //       this.brands = response;
-  //       return response;
-  //     })
-  //   );
-  // }
-
-  // getPlatforms() {
-  //   if (this.platforms.length > 0) {
-  //     return of(this.platforms);
-  //   }
-  //   return this.http.get<IPlatform[]>(this.baseUrl + 'products/platforms').pipe(
-  //     map(response => {
-  //       this.platforms = response;
-  //       return response;
-  //     })
-  //   );
-  // }
-
-  // getGraphics() {
-  //   if (this.graphics.length > 0) {
-  //     return of(this.graphics);
-  //   }
-  //   return this.http.get<IGraphic[]>(this.baseUrl + 'products/graphics').pipe(
-  //     map(response => {
-  //       this.graphics = response;
-  //       return response;
-  //     })
-  //   );
-  // }
 
   getCategories() {
     if (this.categories.length > 0) {

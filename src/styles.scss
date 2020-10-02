@@ -1,8 +1,12 @@
-
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
+@import "../node_modules/bootswatch/dist/cosmo/bootstrap.min.css";
+@import "../node_modules/font-awesome/css/font-awesome.min.css";
+@import "../node_modules/ngx-toastr/toastr.css";
 @import '~@swimlane/ngx-datatable/themes/material.scss';
 /* You can add global styles to this file, and also import other style files */
 .xng-breadcrumb-root {
-  padding: 8px 16px;
+  // padding: 8px 16px;
   display: inline;
   border-radius: 0;
 }
@@ -32,6 +36,7 @@ label.xng-breadcrumb-trail {
 
 .product-tabset > .nav-tabs > li.open .dropdown-menu, .product-tabset > .nav-tabs > li:hover .dropdown-menu {
   margin-top: 0px;
+  z-index: 1;
 }
 
 .product-tabset > .nav-tabs > li.active {
@@ -66,4 +71,24 @@ label.xng-breadcrumb-trail {
     width: 100% !important;
     height: auto !important;
   }
+}
+#information--text{
+  width: inherit;
+  & >p{
+    width: inherit !important;
+  } 
+  & img{
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+.ngx-gallery-icon-content{
+  color: #000000;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon{
+  width: 25px;
+  height: 25px;
 }

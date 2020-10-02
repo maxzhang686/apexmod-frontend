@@ -9,12 +9,12 @@ import { AdminGuard } from "./core/guards/admin.guard";
 import { ShopComponent } from './shop/shop.component';
 
 const routes: Routes = [
-  // { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
-  { path: '', component: ShopComponent, data: { breadcrumb: 'Home' } },
+  { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
+  // { path: '', component: ShopComponent, data: { breadcrumb: 'Home' } },
   {
-    path: 'test-error',
+    path: 'about',
     component: TestErrorComponent,
-    data: { breadcrumb: 'Test Errors' },
+    data: { breadcrumb: 'About Us' },
   },
   {
     path: 'server-error',

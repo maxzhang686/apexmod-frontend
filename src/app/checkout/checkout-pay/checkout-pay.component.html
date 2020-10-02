@@ -1,32 +1,31 @@
-<div *ngIf="order" class="container mt-5">
-  <h2>Order Number: {{ order && order.id }}</h2>
+<div *ngIf="order" class="container-lg mt-5">
+  <h2 class="mx-2">Order Number: {{ order && order.id }}</h2>
 
-  <div class="container mt-5">
+  <div class="mt-4 mx-2">
     <div class="row">
-      <div class="col-8">
+      <div class="col-12 col-sm-7 col-md-8">
         <div class="tab-panel">
           <tabset class="product-tabset">
             <tab heading="PayPal">
-              <!-- <div #paypal></div> -->
               <div id="dropin-container"></div>
-              <button id="submit-button" (click)="pay()">Request payment method</button>    
+              <button class="btn btn-outline-danger" id="submit-button" (click)="pay()"><strong>Confirm and Pay.</strong></button>    
             </tab>
             <tab heading="WeChat Pay">
               <img
-                src="https://i.ibb.co/LNM5h7t/Wechat-IMG32.jpg"
-                style="width: 350px"
+                src="assets/images/wei01.jpeg"
+                style="width: 320px"
               />
             </tab>
             <tab heading="AliPay">
               <img
-                src="https://i.ibb.co/LNM5h7t/Wechat-IMG32.jpg"
-                style="width: 350px"
+                src="assets/images/wei01.jpeg"
+                style="width: 320px"
               />
             </tab>
           </tabset>
         </div>
       </div>
-      <div class="col-4">
+      <div class="col-12 col-sm-5 col-md-4">
         <app-order-totals
           *ngIf="order"
           [shippingPrice]="order.shippingPrice"

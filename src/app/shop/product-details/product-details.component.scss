@@ -15,14 +15,128 @@
 //   width: inherit;
 //   & >p{
 //     width: inherit !important;
-//   } 
+//   }
 //    & img{
 //     width: 100% !important;
 //   }
 // }
 
-
-
 // .description__width{
 //   width: inherit;
 // }
+
+.img-gallery {
+  height: 600px;
+
+  // Extra large devices (large desktops, 1200px and up)
+  @media (max-width: 1200px) {
+    height: 550px;
+  }
+
+  // Large devices (desktops, 992px and up)
+  @media (max-width: 992px) {
+    height: 500px;
+  }
+
+  @media (max-width: 768px) {
+    height: 430px;
+  }
+
+  @media (max-width: 576px) {
+    height: 450px;
+  }
+
+  // Medium devices (tablets, 768px and up)
+}
+
+.component-main {
+  padding-left: 0px;
+}
+
+.product__title {
+  font-weight: bold;
+}
+
+.price-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.price-box__price {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  & .cart {
+    border-radius: 6px !important;
+    // background: #ffffff;
+    // box-shadow:  5px 5px 10px #666666,
+    //              -5px -5px 10px #ffffff;
+
+    flex-grow: 0; /* default 0 */
+  }
+}
+
+.component__image{
+  width: 100px;
+  height: 100px;
+
+  @media (max-width: 575px) {
+    // display: none;
+    width: 60px;
+    height: 60px;
+  }
+
+  @media (max-width: 410px) {
+    // display: none;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+
+.component__box{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+
+.category__title{
+  margin: 0px 0px 0px 10px;
+}
+
+
+.product-container{
+ position: relative;
+}
+.preview-container{
+  width: 100vw;
+  background-color: aqua;
+  // margin-right: auto;
+  // margin-left: auto;
+  // position: fixed;
+  // top: 0px;
+  // background-color: white;
+  // z-index: 1000;
+}
+
+
+.preview-box{
+  margin-right: auto;
+  margin-left: auto;
+  position: fixed;
+  top: 0px;
+  background-color: white;
+  width: 100vw;
+  z-index: 1000;
+  padding: 5px 0;
+  // border-bottom: solid 2px aqua ;
+}

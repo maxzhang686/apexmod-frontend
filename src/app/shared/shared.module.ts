@@ -12,6 +12,7 @@ import { TextInputComponent } from './components/text-input/text-input.component
 import {CdkStepperModule} from '@angular/cdk/stepper';
 import { StepperComponent } from './components/stepper/stepper.component';
 import { BasketSummaryComponent } from './components/basket-summary/basket-summary.component';
+import { ProductItemsComponent } from "./components/product-items/product-items.component";
 import { RouterModule } from '@angular/router';
 import {CurrencyMaskModule} from 'ng2-currency-mask';
 import {NgxGalleryModule} from '@kolkov/ngx-gallery';
@@ -19,13 +20,12 @@ import { PhotoWidgetComponent } from './components/photo-widget/photo-widget.com
 import {ImageCropperModule} from 'ngx-image-cropper';
 import {NgxDropzoneModule} from 'ngx-dropzone';
 import { EditorModule,TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
-import { DatatableComponent } from './components/datatable/datatable.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 
 @NgModule({
-  declarations: [PagingHeaderComponent, PagerComponent, OrderTotalsComponent, TextInputComponent, StepperComponent, BasketSummaryComponent, PhotoWidgetComponent, DatatableComponent],
+  declarations: [PagingHeaderComponent, PagerComponent, OrderTotalsComponent, TextInputComponent, StepperComponent, BasketSummaryComponent, PhotoWidgetComponent,ProductItemsComponent],
   imports: [
     CommonModule,
     PaginationModule.forRoot(),
@@ -64,9 +64,9 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     ImageCropperModule,
     PhotoWidgetComponent,
     EditorModule,
-    DatatableComponent,
     NgxDatatableModule,
-    CollapseModule
+    CollapseModule,
+    ProductItemsComponent
   ],
   providers: [
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }

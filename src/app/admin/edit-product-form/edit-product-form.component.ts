@@ -1,15 +1,11 @@
 import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { IProduct, ProductFormValues } from '../../shared/models/products';
-// import {IBrand} from '../../shared/models/brand';
-// import {IType} from '../../shared/models/productType';
-// import { IPlatform } from 'src/app/shared/models/platform';
-// import { IGraphic } from 'src/app/shared/models/productGraphic';
 import { ICategory } from 'src/app/shared/models/category';
 import { ITag } from 'src/app/shared/models/tag';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from '../admin.service';
 
-// declare var tinymce: any;
+
 @Component({
   selector: 'app-edit-product-form',
   templateUrl: './edit-product-form.component.html',
@@ -18,18 +14,17 @@ import { AdminService } from '../admin.service';
 export class EditProductFormComponent implements OnInit, AfterViewInit {
   @Input() product: ProductFormValues;
   @Input() edit: boolean;
-  // @Input() brands: IBrand[];
-  // @Input() types: IType[];
-  // @Input() platforms: IPlatform[];
+
   @Input() categories: ICategory[];
   @Input() tags: ITag[];
 
   success = false;
   editorConfig;
+  editorConfig02;
 
   //for data table
   @Input() rows = [];
-  // rows = [];
+
   selected = [];
   loadingIndicator = true;
   reorderable = true;
@@ -57,7 +52,6 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
   }
 
   deleteProduct(id) {
-    console.log(id);
 
     const resultIndex = this.rows.findIndex((item, index, items) => {
       return item.id === id;
@@ -71,7 +65,7 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
     rows.splice(resultIndex, 1);
     this.rows = rows;
     this.updateChildProductUpdateFormat();
-    console.log(this.rows);
+
   }
 
   setDefault(id) {
@@ -85,31 +79,38 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
   }
 
   RenderChildProduct() {
-    console.log(this.pickCategoryId);
+    // console.log(this.pickCategoryId);
+    this.childProductsGroupByCate = [];
+    this.pickChildProduct ='none';
     this.adminService
       .getChildProductByCategory(this.pickCategoryId)
       .subscribe((response: []) => {
-        // console.log(response);
+
         this.childProductsGroupByCate = response;
-        console.log(this.childProductsGroupByCate);
+        // console.log(this.childProductsGroupByCate);
       });
   }
 
-  HandleChildProduct() {
-    console.log(this.pickChildProduct);
-  }
 
   handleAddChildProduct() {
-    let newChildProduct = this.changeChildProductData(this.pickChildProduct);
-    // console.log('row',this.rows)
-    // console.log('row',newChildProduct)
+    // console.log(1, this.pickChildProduct); 
+    if (this.pickChildProduct === "none" || this.pickChildProduct === undefined ) {
+      return
+    } else {
+          let newChildProduct = this.changeChildProductData(this.pickChildProduct);
+    // console.log(2, newChildProduct); 
     let rows = [...this.rows, newChildProduct];
     this.rows = rows;
     this.updateChildProductUpdateFormat();
+    }
+
   }
-  // getAllChildProduct(){
-  //   return this.http.get(this.baseUrl+ '/products/discriminator/childproduct');
-  // }
+
+  HandleChildProduct(value) {
+    // console.log(value);
+    // console.log(this.pickChildProduct);
+    // this.pickChildProduct = 
+  }
 
   changeChildProductData(product) {
     return {
@@ -133,12 +134,11 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
       return newElement;
     });
     this.childProductNewFormatGroup = newRows;
-    console.log(this.childProductNewFormatGroup);
+
   }
 
   ngOnInit(): void {
-    // console.log(this.product, this.product.productCategory);
-    // console.log(this.categories);
+
     let self = this;
     this.editorConfig = {
       base_url: '/tinymce', // Root for resources
@@ -160,31 +160,50 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
 
         const file = blobInfo.blob();
         self.adminService.uploadRichImages(formData).subscribe((response) => {
-          console.log(response);
-          let url = 'http://104.210.85.29/Content/' + response;
+
+          let url = 'https://www.apexmod.com.au/Content/' + response;
           success(url);
         });
       },
     };
+
+
+    this.editorConfig02 = {
+      base_url: '/tinymce', // Root for resources
+      suffix: '.min',
+      height: 500,
+      image_dimensions: false,
+      plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table paste code help wordcount'
+      ],
+      toolbar:
+        'undo redo | formatselect | bold italic backcolor | \
+        alignleft aligncenter alignright alignjustify | \
+        bullist numlist outdent indent | removeformat |'
+    };
+
+
+
     this.setRowsData();
   }
 
   ngAfterViewInit() {}
 
   handleChangeTagIds(id) {
-    //console.log(id);
+
     const checkCurrentTagId = this.product.productTagIds.includes(id);
-    // console.log(this.product.productTagIds);
+
     if (checkCurrentTagId === false) {
       this.product.productTagIds.push(id);
-      console.log(this.product);
     } else {
       const index = this.product.productTagIds.findIndex(
         (indexId) => indexId === id
       );
       this.product.productTagIds.splice(index, 1);
     }
-    console.log(this.product.productTagIds);
+
   }
 
   deleteSomeObjectKey() {
@@ -195,28 +214,26 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
 
   async onSubmit(product: ProductFormValues) {
     this.deleteSomeObjectKey();
-    if (this.product.discriminator == 'Product') {
+    if (this.product.discriminator === 'Product') {
       await this.updateChildProductUpdateFormat();
     }
 
     if (this.route.snapshot.url[0].path === 'edit') {
-      console.log('submit: ', this.product);
+
       const updatedProduct = {
         ...this.product,
         ...product,
         price: +product.price,
-        // productTagIds: [1, 2],
+
         selectedChildProducts: this.childProductNewFormatGroup,
       };
-      console.log('update', updatedProduct);
+
       this.adminService
         .updateProduct(updatedProduct, +this.route.snapshot.paramMap.get('id'))
         .subscribe((response: any) => {
           this.router.navigate([
             `/admin/edit/${+this.route.snapshot.paramMap.get('id')}`,
           ]);
-          // alert(`${response.name} updated!`);
-          console.log(response);
           this.success = true;
         });
     } else {
@@ -226,20 +243,15 @@ export class EditProductFormComponent implements OnInit, AfterViewInit {
         productTagIds: this.product.productTagIds,
         description: this.product.description,
       };
-
-      console.log(0, product);
-      console.log(1, newProduct);
       this.adminService.createProduct(newProduct).subscribe((response: any) => {
         this.router.navigate([`/admin/edit/${response}`]);
-        // alert(`${response.name} created!`);
-        // this.success = true;
+
       });
     }
   }
 
   updatePrice(event: any) {
     this.product.price = event;
-    //console.log(this.product)
   }
 
   closeAlert() {

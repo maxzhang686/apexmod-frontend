@@ -21,7 +21,6 @@ export class CheckoutComponent implements OnInit {
     this.getAddressFormValues();
     this.getDeliveryMethodValue();
     this.basketTotals$ = this.basketService.basketTotal$;
-    console.log(this.basketTotals$);
   }
 
   createCheckoutForm() {
@@ -33,6 +32,7 @@ export class CheckoutComponent implements OnInit {
         city: [null, Validators.required],
         state: [null, Validators.required],
         zipcode: [null, Validators.required],
+        phone: [null, Validators.required]
       }),
       deliveryForm: this.fb.group({
         deliveryMethod: [null, Validators.required]
@@ -52,7 +52,7 @@ export class CheckoutComponent implements OnInit {
         this.checkoutForm.get('addressForm').patchValue(address);
       }
     }, error => {
-      console.log(error);
+      // console.log(error);
     });
   }
 

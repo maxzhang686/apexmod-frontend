@@ -1,4 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Directive,
+  Renderer2,
+  HostListener,
+  HostBinding,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { IProduct, IChildrenComponent } from 'src/app/shared/models/products';
 import { ShopService } from '../shop.service';
 import { ActivatedRoute } from '@angular/router';
@@ -10,6 +19,30 @@ import {
   NgxGalleryImageSize,
   NgxGalleryOptions,
 } from '@kolkov/ngx-gallery';
+
+// @Directive({
+//   selector: "[ccCardHover]"
+// })
+// class CardHoverDirective {
+//   // @HostBinding('class.card-outline-primary')private ishovering: boolean;
+
+//   constructor(private el: ElementRef,
+//               private renderer: Renderer2) {
+//     // renderer.setElementStyle(el.nativeElement, 'backgroundColor', 'gray');
+//   }
+
+//   @HostListener('mouseover') onMouseOver() {
+//     let part = this.el.nativeElement.querySelector('.preview-container');
+//     this.renderer.setStyle(part, 'display', 'block');
+//     // this.ishovering = true;
+//   }
+
+//   @HostListener('mouseout') onMouseOut() {
+//     let part = this.el.nativeElement.querySelector('.preview-container');
+//     this.renderer.setStyle(part, 'display', 'none');
+//     // this.ishovering = false;
+//   }
+// }
 
 @Component({
   selector: 'app-product-details',
@@ -24,37 +57,99 @@ export class ProductDetailsComponent implements OnInit {
   components: IChildrenComponent[];
   childComponentsId: any;
   childComponentsPrice: any;
-  childComponentsName: any;
+  childComponentsImg: any;
   childProducts: any;
   basketProduct: any;
+  @ViewChild('descriptionComponents') descriptionComponents: ElementRef;
+  // @ViewChild('previewContainer')  previewContainer: ElementRef;
+
+  @HostListener('window:scroll') onScroll(e: Event): void {
+    // console.log(window.pageYOffset,this.descriptionComponents.nativeElement.getBoundingClientRect().top, window.innerHeight);
+    // console.log(this.descriptionComponents.nativeElement.getBoundingClientRect().top);
+
+    let distance = this.descriptionComponents.nativeElement.getBoundingClientRect()
+      .top;
+    let part = this.el.nativeElement.querySelector('.preview-container');
+    if (distance <= 0) {
+      this.renderer.setStyle(part, 'display', 'block');
+    } else {
+      this.renderer.setStyle(part, 'display', 'none');
+    }
+  }
 
   constructor(
     private shopService: ShopService,
     private activateRoute: ActivatedRoute,
     private bcService: BreadcrumbService,
-    private basketService: BasketService
+    private basketService: BasketService,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {
     this.bcService.set('@productDetails', '');
+
+    // document.onscroll = function () {
+    //   // var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    //   // var cHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    //   let scrollTop = document.documentElement.scrollTop;
+    //   let cHeight = window.innerHeight || document.documentElement.clientHeight;
+    //   let oDiv = document.getElementById('product-component');
+    //   if (scrollTop > oDiv.offsetTop - cHeight) alert('触发了');
+    // };
   }
+
+  // @HostListener('mouseover') onMouseOver() {
+  //   let part = this.el.nativeElement.querySelector('.preview-container');
+  //   this.renderer.setStyle(part, 'display', 'block');
+  //   // this.ishovering = true;
+  // }
+
+  // @HostListener('mouseout') onMouseOut() {
+  //   let part = this.el.nativeElement.querySelector('.preview-container');
+  //   this.renderer.setStyle(part, 'display', 'none');
+  //   // this.ishovering = false;
+  // }
+  // getYPosition(e: Event): number {
+  //   return (e.target as Element).scrollTop;
+  // }
 
   ngOnInit() {
     this.loadProduct();
   }
 
   initializeGallery() {
-    this.galleryOptions = [
-      {
-        width: '500px',
-        height: '600px',
-        imagePercent: 100,
-        thumbnailsColumns: 4,
-        imageAnimation: NgxGalleryAnimation.Fade,
-        imageSize: NgxGalleryImageSize.Contain,
-        thumbnailSize: NgxGalleryImageSize.Contain,
-        preview: false,
-      },
-    ];
     this.galleryImages = this.getImages();
+    if (this.galleryImages.length === 1) {
+      this.galleryOptions = [
+        {
+          width: '100%',
+          height: '100%',
+          imagePercent: 100,
+          thumbnailsColumns: 4,
+          arrowPrevIcon: 'fa fa-chevron-left',
+          arrowNextIcon: 'fa fa-chevron-right',
+          imageAnimation: NgxGalleryAnimation.Fade,
+          imageSize: NgxGalleryImageSize.Contain,
+          thumbnailSize: NgxGalleryImageSize.Contain,
+          imageArrows: false,
+          preview: false,
+        },
+      ];
+    } else {
+      this.galleryOptions = [
+        {
+          width: '100%',
+          height: '100%',
+          imagePercent: 100,
+          thumbnailsColumns: 4,
+          arrowPrevIcon: 'fa fa-chevron-left',
+          arrowNextIcon: 'fa fa-chevron-right',
+          imageAnimation: NgxGalleryAnimation.Fade,
+          imageSize: NgxGalleryImageSize.Contain,
+          thumbnailSize: NgxGalleryImageSize.Contain,
+          preview: false,
+        },
+      ];
+    }
   }
 
   setPrice(data) {
@@ -66,13 +161,11 @@ export class ProductDetailsComponent implements OnInit {
     return count;
   }
 
-  handleChange(productCategory, id, price,name) {
+  handleChange(productCategory, id, price, pictureUrl) {
     this.childComponentsId[productCategory] = id;
     this.childComponentsPrice[productCategory] = price;
-    this.childComponentsName[productCategory] = name;
-    console.log(this.childComponentsId);
-    console.log(this.childComponentsPrice);
-    console.log(this.childComponentsName);
+    this.childComponentsImg[productCategory] = pictureUrl;
+    // console.log(this.childComponentsImg);
     this.setPrice(this.childComponentsPrice);
   }
 
@@ -101,12 +194,12 @@ export class ProductDetailsComponent implements OnInit {
     return priceGroup;
   }
 
-  mapChildrenProductsName(arr) {
+  mapChildrenProductsImg(arr) {
     let priceGroup = {};
     arr.forEach((items, index) => {
       let products = priceGroup[items.productCategory] || [];
       if (items.isDefault) {
-        products = items.name;
+        products = items.pictureUrl;
       }
       priceGroup[items.productCategory] = products;
     });
@@ -138,11 +231,19 @@ export class ProductDetailsComponent implements OnInit {
   getImages() {
     const imageUrls = [];
     for (const photo of this.product.photos) {
-      imageUrls.push({
-        small: photo.pictureUrl,
-        medium: photo.pictureUrl,
-        big: photo.pictureUrl,
-      });
+      if (photo.isMain === true) {
+        imageUrls.unshift({
+          small: photo.pictureUrl,
+          medium: photo.pictureUrl,
+          big: photo.pictureUrl,
+        });
+      } else {
+        imageUrls.push({
+          small: photo.pictureUrl,
+          medium: photo.pictureUrl,
+          big: photo.pictureUrl,
+        });
+      }
     }
     return imageUrls;
   }
@@ -157,28 +258,26 @@ export class ProductDetailsComponent implements OnInit {
     }
     this.childProducts = output;
   }
-  handlerChangeProductNameObjectToArry() {
-    let input = this.childComponentsName;
-    let output = [];
-    for (var type in input) {
-      let item = {};
-      item[type] = input[type];
-      output.push(item);
-    }
-    this.basketProduct = output;
-  }
+  // handlerChangeProductNameObjectToArry() {
+  //   let input = this.childComponentsName;
+  //   let output = [];
+  //   for (var type in input) {
+  //     let item = {};
+  //     item[type] = input[type];
+  //     output.push(item);
+  //   }
+  //   this.basketProduct = output;
+  // }
 
   addItemToBasket() {
-    // console.log(this.product);
     this.handlerChangeChildrenProductsObjectToArry();
-    this.handlerChangeProductNameObjectToArry();
-    console.log(this.basketProduct);
+    // this.handlerChangeProductNameObjectToArry();
 
     this.basketService.addItemToBasket(
       this.product,
       this.quantity,
-      this.childProducts,
-      this.basketProduct
+      this.childProducts
+      // this.basketProduct
     );
   }
 
@@ -198,11 +297,10 @@ export class ProductDetailsComponent implements OnInit {
       .subscribe(
         (product) => {
           this.product = product;
-          console.log(this.product);
           this.bcService.set('@productDetails', product.name);
           this.initializeGallery();
 
-          if (this.product.productCategory==="pc") {
+          if (this.product.discriminator === 'Product') {
             const componentGroup = this.mapChildrenProductsForRender(
               this.product.childProducts
             );
@@ -212,28 +310,20 @@ export class ProductDetailsComponent implements OnInit {
             const priceGroup = this.mapChildrenProductsPrice(
               this.product.childProducts
             );
-            const nameGroup = this.mapChildrenProductsName(
+            const imgGroup = this.mapChildrenProductsImg(
               this.product.childProducts
             );
-
 
             this.components = componentGroup;
             this.childComponentsId = idGroup;
             this.childComponentsPrice = priceGroup;
-            this.childComponentsName = nameGroup;
-            console.log('array', this.components);
-            console.log('id', this.childComponentsId);
-            console.log('price', this.childComponentsPrice);
-            console.log('Name', this.childComponentsName);
-
+            this.childComponentsImg = imgGroup;
+            // console.log(this.product);
+            // console.log(idGroup,imgGroup);
           }
-
-
-          // this.product.price = this.setPrice(this.componentTotalPrice)
-          // console.log(this.setPrice(this.componentTotalPrice));
         },
         (error) => {
-          console.log(error);
+          // console.log(error);
         }
       );
   }
